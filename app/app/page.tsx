@@ -30,6 +30,7 @@ import { NETWORKS } from "./constants";
 import { Disclaimer } from "@/components/ui/disclaimer";
 import { calculateHashes } from "../components/safeHashesComponent";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Blockies from "react-blockies";
 
 interface FormData {
   method: string; // "direct" or "api"
@@ -868,6 +869,11 @@ function HomeContent() {
                                   description: `${label} has been copied to your clipboard.`,
                                 });
                               }}
+                            />
+                            <Blockies
+                                seed={result.hashes?.[key as keyof typeof result.hashes]}
+                                size={20}
+                                scale={4}
                             />
                           </div>
                         </div>

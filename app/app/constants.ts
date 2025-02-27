@@ -92,7 +92,7 @@ export const NETWORKS = [
     },
     {
       value: "optimism",
-      label: "Optimism",
+      label: "OP Mainnet",
       chainId: 10,
       gnosisPrefix: "oeth",
       logo: "networks/optimism.ico",

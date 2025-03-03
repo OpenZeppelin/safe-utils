@@ -9,13 +9,16 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+		screens: {
+			'xs': '480px',
+		},
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
   			'gradient-main': `linear-gradient(180deg, 
   				#FAFAFA 0%,
   				#F8F8FF 50%,
-  				#E6E7FF 100%
+  				#4F56FA 100%
   			)`,
   			'gradient-main-dark': `linear-gradient(180deg, 
   				#101015 0%,

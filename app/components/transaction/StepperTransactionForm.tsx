@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { Form } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
@@ -24,17 +24,49 @@ export default function StepperTransactionForm({
   nextStep,
   prevStep
 }: StepperTransactionFormProps) {
+  const currentMethod = form.watch("method");
+  const previousMethodRef = useRef(currentMethod);
+  const stepWhenSwitchingRef = useRef(step);
+  const resetRequiredRef = useRef(false);
 
-  // Modifica qui: controlliamo se siamo già nello step 4, in tal caso non avanzare oltre
+  const resetToStep1 = useCallback(() => {
+
+    const stepsToGoBack = stepWhenSwitchingRef.current - 1;
+    
+    for (let i = 0; i < stepsToGoBack; i++) {
+      setTimeout(() => {
+        prevStep();
+      }, i * 50);
+    }
+  }, [prevStep]);
+
+  useEffect(() => {
+    if (currentMethod !== previousMethodRef.current) {
+      stepWhenSwitchingRef.current = step;
+      resetRequiredRef.current = true;
+      previousMethodRef.current = currentMethod;
+    }
+  }, [currentMethod, step]);
+
+  useEffect(() => {
+    if (resetRequiredRef.current && currentMethod === "direct" && step > 1) {
+      resetRequiredRef.current = false;
+      resetToStep1();
+    }
+  }, [currentMethod, step, resetToStep1]);
+
   const handleCalculationSubmit = async (e?: React.BaseSyntheticEvent) => {
     e?.preventDefault();
-    await form.handleSubmit(async (data) => {
-      await onSubmit(e);
-      // Avanza solo se non siamo già nello step finale (4)
-      if (step < 4) {
-        nextStep();
-      }
-    })(e);
+    try {
+      await form.handleSubmit(async (data) => {
+        await onSubmit(e);
+        if (data.method === "direct" && step < 4) {
+          nextStep();
+        }
+      })(e);
+    } catch (error) {
+      console.error("Calculation error:", error);
+    }
   };
 
   return (
@@ -45,7 +77,7 @@ export default function StepperTransactionForm({
           name="method"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Calculation method</FormLabel>
+              <FormLabel htmlFor="method">Calculation method</FormLabel>
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
@@ -53,7 +85,7 @@ export default function StepperTransactionForm({
                 value={field.value}
               >
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger id="method">
                     <SelectValue placeholder="Select method" />
                   </SelectTrigger>
                 </FormControl>
@@ -78,7 +110,7 @@ export default function StepperTransactionForm({
             step={step}
             nextStep={nextStep}
             prevStep={prevStep}
-          isSubmitting={isLoading}
+            isSubmitting={isLoading}
             calculationSubmit={handleCalculationSubmit}
           />
         ) : (

@@ -11,7 +11,7 @@ interface DirectInputWizardProps {
   form: UseFormReturn<FormData>;
   step: number;
   nextStep: () => boolean;
-  prevStep: () => boolean
+  prevStep: () => void
   isSubmitting: boolean;
   calculationSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
 }

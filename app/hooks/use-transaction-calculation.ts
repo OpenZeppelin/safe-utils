@@ -99,17 +99,15 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
     }
   };
 
-  // Function to go back to previous step
   const prevStep = () => {
     setStep(Math.max(1, step - 1));
   };
 
-  // Form submission handler
   const handleSubmit = async (data: FormData) => {
     setIsLoading(true);
     setResult(null);
     setCalculationRequested(true);
-
+  
     try {
       let txParams: TransactionParams = {
         to: data.to,
@@ -134,6 +132,7 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
             data.nonce
           );
         } catch (error: any) {
+          setCalculationRequested(false);
           throw new Error(`API Error: ${error.message}`);
         }
       }
@@ -158,7 +157,7 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
         txParams.nonce,
         txParams.version || data.version
       );
-
+  
       setResult({
         network: {
           name: NETWORKS.find(n => n.value === data.network)?.label || data.network,
@@ -183,9 +182,15 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
       });
     } catch (error: any) {
       console.error("Error:", error);
-      setResult({
-        error: error.message || "An error occurred during hash calculation."
-      });
+      
+      if (data.method === "api" && error.message.includes("API Error")) {
+        setCalculationRequested(false);
+      } else {
+        setResult({
+          error: error.message || "An error occurred during hash calculation."
+        });
+      }
+      
       toast({
         title: "Error",
         description: error.message || "An error occurred during hash calculation.",

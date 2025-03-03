@@ -6,7 +6,7 @@ export function Footer() {
     <footer className="py-4 w-full flex items-center justify-center">
       <div className="container flex items-center justify-center">
         <p className="text-center text-sm text-white flex items-center gap-2 flex-wrap justify-center">
-          Developed with <Heart className="h-4 w-4 fill-red-500 text-red-500" /> by{" "}
+          Developed with <Heart className="h-4 w-4" /> by{" "}
           <a
             href="https://www.openzeppelin.com/"
             target="_blank"

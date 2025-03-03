@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/toaster";
@@ -24,11 +24,24 @@ function HomeContent() {
     prevStep,
   } = useTransactionCalculation(searchParams);
 
+  const [lastMethod, setLastMethod] = useState(form.watch("method"));
+  const [showResult, setShowResult] = useState(false);
+  
+  useEffect(() => {
+    const currentMethod = form.watch("method");
+    
+    if (currentMethod !== lastMethod) {
+      setShowResult(false);
+      setLastMethod(currentMethod);
+    }
+    
+    setShowResult(calculationRequested && step >= 4);
+  }, [calculationRequested, step, form, lastMethod]);
+
   const renderResultCard = () => {
-    if (!calculationRequested || step < 4) return null;
+    if (!showResult) return null;
     return <ResultCard result={result} isLoading={isLoading} />;
   };
-
 
   return (
     <>

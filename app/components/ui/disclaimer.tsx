@@ -42,7 +42,7 @@ export function Disclaimer({
           >
             @pcaversaccio
           </a>{" "}
-          that adds a user interface. It has not been subject to any security assessment and is therefore not suitable for production use. Any use of the tool is at your own risk in accordance with our{" "}
+          that adds a user interface. It has not been subject to any security assessment. Any use of the tool is at your own risk in accordance with our{" "}
           <a
             href="https://www.openzeppelin.com/tos"
             target="_blank"
@@ -62,7 +62,7 @@ export function Disclaimer({
           >
             run the tool locally
           </a>{" "}
-          where possible.
+          or from different devices where possible.
         </DialogDescription>
       </DialogContent>
     </Dialog>

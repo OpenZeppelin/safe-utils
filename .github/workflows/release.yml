@@ -1,0 +1,129 @@
+name: Create Tag and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: "The type of version you want to release"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: 'minor'
+        required: false
+
+jobs:
+  check-permission:
+    runs-on: ubuntu-latest
+    outputs:
+      is-admin: ${{ steps.check-admin.outputs.is_admin }}
+    steps:
+      - name: Check if user is admin
+        id: check-admin
+        run: |
+          IS_ADMIN=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/collaborators/${{ github.actor }}/permission" | \
+            jq -r '.permission == "admin"')
+          echo "is_admin=$IS_ADMIN" >> $GITHUB_OUTPUT
+          echo "User ${{ github.actor }} is admin: $IS_ADMIN"
+
+  create-release:
+    needs: check-permission
+    if: needs.check-permission.outputs.is-admin == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        id: get_latest_tag
+        run: |
+          # Ensure we fetch all tags from all remotes
+          git fetch --tags --force
+          
+          # List all tags, sort by version number, and get the latest
+          LATEST_TAG=$(git tag -l "v*" | sort -V | tail -n 1)
+          if [ -z "$LATEST_TAG" ]; then
+            LATEST_TAG="v0.0.0"
+          fi
+          
+          echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+          echo "Latest tag: $LATEST_TAG"
+
+      - name: Calculate new version
+        id: calculate_version
+        run: |
+          LATEST_TAG="${{ steps.get_latest_tag.outputs.latest_tag }}"
+          # Remove 'v' prefix if present
+          VERSION=${LATEST_TAG#v}
+          
+          # Split version into components
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+          
+          # Increment based on version type
+          case "${{ github.event.inputs.version_type }}" in
+            major)
+              MAJOR=$((MAJOR + 1))
+              MINOR=0
+              PATCH=0
+              ;;
+            minor)
+              MINOR=$((MINOR + 1))
+              PATCH=0
+              ;;
+            patch)
+              PATCH=$((PATCH + 1))
+              ;;
+          esac
+          
+          NEW_VERSION="v$MAJOR.$MINOR.$PATCH"
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Create tag
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Fetch all tags to ensure we have the latest information
+          git fetch --tags
+          
+          # Check if tag already exists
+          if git rev-parse --verify --quiet "refs/tags/${{ steps.calculate_version.outputs.new_version }}" >/dev/null; then
+            echo "Tag ${{ steps.calculate_version.outputs.new_version }} already exists, skipping tag creation"
+          else
+            echo "Creating tag ${{ steps.calculate_version.outputs.new_version }}"
+            git tag ${{ steps.calculate_version.outputs.new_version }}
+            git push origin ${{ steps.calculate_version.outputs.new_version }}
+          fi
+
+      - name: Create release
+        run: |
+          # Check if release already exists
+          if gh release view ${{ steps.calculate_version.outputs.new_version }} &>/dev/null; then
+            echo "Release ${{ steps.calculate_version.outputs.new_version }} already exists, skipping release creation"
+          else
+            echo "Creating release ${{ steps.calculate_version.outputs.new_version }}"
+            gh release create ${{ steps.calculate_version.outputs.new_version }} \
+            --generate-notes \
+            --title "Release ${{ steps.calculate_version.outputs.new_version }}" \
+            --draft
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  unauthorized:
+    needs: check-permission
+    if: needs.check-permission.outputs.is-admin != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unauthorized message
+        run: |
+          echo "Error: Only repository administrators can create releases"
+          exit 1

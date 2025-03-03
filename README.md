@@ -65,6 +65,8 @@ To learn more about the technologies used in this project, check out the followi
 - [React Documentation](https://reactjs.org/) - learn about React.
 - [Tailwind CSS](https://tailwindcss.com/) - learn about the utility-first CSS framework used in this project.
 
-## Contributing
+## Copyright and Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+© 2025 Zeppelin Group Ltd. 
+
+Contributions are welcome! Please feel free to submit a Pull Request (you'll be required to sign our standard Contribution License Agreement).

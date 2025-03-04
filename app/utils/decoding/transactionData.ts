@@ -41,7 +41,8 @@ export async function decodeTransactionData(to: string, data: string, chainId: s
           let value = "";
           
           if (type === "address") {
-            value = "0x" + rawData.slice(dataPosition, dataPosition + 40);
+            const hex = rawData.slice(dataPosition, dataPosition + 64);
+            value = "0x" + hex.slice(24); 
             dataPosition += 64;
           } 
           else if (type.startsWith("uint") || type.startsWith("int")) {

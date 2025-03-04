@@ -16,14 +16,14 @@ const config: Config = {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
   			'gradient-main': `linear-gradient(180deg, 
-  				#FAFAFA 0%,
-  				#F8F8FF 50%,
+  				#FFFFFF 30%,
+  				#4F56FA 73.48%,
   				#4F56FA 100%
   			)`,
   			'gradient-main-dark': `linear-gradient(180deg, 
-  				#101015 0%,
-  				#7F8DFF 73.48%,
-  				#7F8DFF 100%
+  				#000000 0%,
+  				#15193A 73.48%,
+  				#15193A 100%
   			)`,
   		},
   		borderRadius: {

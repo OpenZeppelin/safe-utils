@@ -37,12 +37,14 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>
-            <div className="min-h-screen bg-gradient-main dark:bg-gradient-main-dark">
-              <div className="relative z-10 flex flex-col min-h-screen">
+            <div className="min-h-screen flex flex-col bg-gradient-main dark:bg-gradient-main-dark">
+              <div className="flex flex-col flex-grow">
                 <Header />
-                <main className="flex-grow">{children}</main>
-                <Footer />
+                <main className="flex-grow flex flex-col items-center justify-start py-10">
+                  {children}
+                </main>
               </div>
+              <Footer />
             </div>
           </TooltipProvider>
           <GoogleAnalytics gaId="G-SY66CZ3XZT" />

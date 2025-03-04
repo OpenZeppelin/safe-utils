@@ -6,6 +6,8 @@ import { NETWORKS } from "@/app/constants";
 import { calculateHashes } from "@/components/safeHashesComponent";
 import { fetchTransactionDataFromApi } from "@/utils/api";
 import { FormData, CalculationResult, TransactionParams } from "@/types/form-types";
+import { decodeTransactionData } from "@/utils/decoding/transactionData";
+import { encodeExecTransaction } from "@/utils/encoding/execTransaction";
 
 export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams) {
   const [result, setResult] = useState<CalculationResult | null>(null);
@@ -136,6 +138,27 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
           throw new Error(`API Error: ${error.message}`);
         }
       }
+
+      if (!txParams.dataDecoded && txParams.data !== "0x") {
+        txParams.dataDecoded = await decodeTransactionData(
+          txParams.to, 
+          txParams.data, 
+          data.chainId.toString()
+        );
+      }
+
+      const execTransactionCall = encodeExecTransaction(
+        txParams.to,
+        txParams.value,
+        txParams.data,
+        txParams.operation.toString(),
+        txParams.safeTxGas,
+        txParams.baseGas,
+        txParams.gasPrice,
+        txParams.gasToken,
+        txParams.refundReceiver,
+        txParams.signatures || "0x"
+      );
       
       const {
         domainHash,
@@ -172,7 +195,12 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
           data_decoded: txParams.dataDecoded || {
             method: txParams.data === "0x" ? "0x (ETH Transfer)" : "Unknown",
             parameters: []
-          }
+          },
+          exec_transaction: {
+            encoded: execTransactionCall.encoded,
+            decoded: execTransactionCall.decoded
+          },
+          signatures: txParams.signatures !== "0x" ? txParams.signatures : undefined
         },
         hashes: {
           domain_hash: domainHash,

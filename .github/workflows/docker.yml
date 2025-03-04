@@ -49,3 +49,29 @@ jobs:
             ghcr.io/${{ steps.repo_name.outputs.lowercase }}:${{ github.event.release.tag_name }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    env:
+      ROLE_FOR_OIDC: "arn:aws:iam::${{ secrets.ROOT_ACCOUNT_ID }}:role/github-actions-research-account-oidc-role"
+      ROLE_TO_ASSUME: "arn:aws:iam::${{ secrets.RESEARCH_ACCOUNT_ID }}:role/GithubOIDCResearchAccountRole"
+      ECS_CLUSTER: "safe-utils-cluster"
+      ECS_SERVICE: "safe-utils-service"
+      AWS_REGION: "us-east-1" 
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up AWS credentials via OIDC and role chaining
+        uses: ./.github/actions/oidc
+        with:
+          role-for-oidc: ${{ env.ROLE_FOR_OIDC }}
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+      
+      - name: AWS ECS force new deployment
+        run: |
+          aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment --region $AWS_REGION

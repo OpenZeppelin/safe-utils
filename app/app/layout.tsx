@@ -5,7 +5,7 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 import { Footer } from '@/components/footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { Header } from '@/components/header'
-import Background from '@/components/background'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,15 +37,17 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <TooltipProvider>
-            <div className="relative min-h-screen">
-              <Background />
-              <div className="relative z-10 flex flex-col min-h-screen w-full">
+            <div className="min-h-screen flex flex-col bg-gradient-main dark:bg-gradient-main-dark">
+              <div className="flex flex-col flex-grow">
                 <Header />
-                <main className="flex-grow">{children}</main>
-                <Footer />
+                <main className="flex-grow flex flex-col items-center justify-start py-10">
+                  {children}
+                </main>
               </div>
+              <Footer />
             </div>
           </TooltipProvider>
+          <GoogleAnalytics gaId="G-SY66CZ3XZT" />
         </ThemeProvider>
       </body>
     </html>

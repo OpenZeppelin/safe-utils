@@ -150,7 +150,9 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
                         className="px-3 py-2 break-all"
                         title={param.value}
                       >
-                        {param.value}
+                        {typeof param.value === 'string' && param.value.startsWith('0x') && param.value.length > 10 
+                          ? `${param.value.substring(0, 6)}...${param.value.substring(param.value.length - 4)}`
+                          : param.value}
                       </td>
                       <td className="px-3 py-2">
                         <CopyButton
@@ -221,7 +223,9 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
                         className="px-3 py-2 max-w-[200px] overflow-hidden text-ellipsis" 
                         title={param.value}
                       >
-                        {param.value}
+                        {typeof param.value === 'string' && param.value.startsWith('0x') && param.value.length > 10 
+                          ? `${param.value.substring(0, 6)}...${param.value.substring(param.value.length - 4)}`
+                          : param.value}
                       </td>
                       <td className="px-3 py-2">
                         <CopyButton

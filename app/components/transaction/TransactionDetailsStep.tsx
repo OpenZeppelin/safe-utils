@@ -53,7 +53,7 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
                   </span>
                 </TooltipTrigger>
                 <TooltipContent className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black">
-                  <p>This is the address you're interacting with (Safe, token contract etc...).</p>
+                  <p>This is the address you&apos;re interacting with (Safe, token contract etc...).</p>
                 </TooltipContent>
               </Tooltip>
             </FormLabel>
@@ -83,7 +83,7 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
                   </span>
                 </TooltipTrigger>
                 <TooltipContent className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black">
-                  <p>This is the native currency value you're attaching to the call (ETH, BNB etc...).</p>
+                  <p>This is the native currency value you&apos;re attaching to the call (ETH, BNB etc...).</p>
                 </TooltipContent>
               </Tooltip>
             </FormLabel>
@@ -113,7 +113,7 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
                   </span>
                 </TooltipTrigger>
                 <TooltipContent className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black">
-                  <p>This is the raw data of the call. In Safe's UI it is the Raw data field.</p>
+                  <p>This is the raw data of the call. In Safe&apos;s UI it is the Raw data field.</p>
                 </TooltipContent>
               </Tooltip>
             </FormLabel>

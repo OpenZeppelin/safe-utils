@@ -38,7 +38,7 @@ export default function AdvancedParamsStep({ form }: AdvancedParamsStepProps) {
             </span>
           </TooltipTrigger>
           <TooltipContent className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black">
-            <p>These are extra parameters for the multisig transaction execution. Most of the time you don't need to change these, but you can put the actual values if those are custom ones.</p>
+            <p>These are extra parameters for the multisig transaction execution. Most of the time you don&apos;t need to change these, but you can put the actual values if those are custom ones.</p>
           </TooltipContent>
         </Tooltip>
       </h3>

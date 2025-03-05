@@ -98,6 +98,15 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
   
     const { method, signature, parameters } = result.transaction.data_decoded;
   
+    const handleCopyValue = (value: string) => {
+      // Copy to clipboard
+      navigator.clipboard.writeText(value);
+      toast({
+        title: "Copied to clipboard",
+        description: `Parameter value has been copied.`,
+      });
+    };
+
     return (
       <div className="space-y-4 w-full">
         <div className="space-y-2 w-full">
@@ -132,7 +141,7 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
                     <th className="px-3 py-2 text-left font-medium w-1/4">Name</th>
                     <th className="px-3 py-2 text-left font-medium w-1/4">Type</th>
                     <th className="px-3 py-2 text-left font-medium w-2/4">Value</th>
-                    <th className="px-3 py-2 w-[40px]"></th>
+                    <th className="hidden sm:table-cell px-3 py-2 w-[40px]"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -149,12 +158,17 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
                       <td
                         className="px-3 py-2 break-all"
                         title={param.value}
+                        onClick={() => {
+                          // Only mobile (<sm) copy at click
+                          const isMobile = window.innerWidth < 640;
+                          if (isMobile) handleCopyValue(param.value);
+                        }}
                       >
                         {typeof param.value === 'string' && param.value.startsWith('0x') && param.value.length > 10 
                           ? `${param.value.substring(0, 6)}...${param.value.substring(param.value.length - 4)}`
                           : param.value}
                       </td>
-                      <td className="px-3 py-2">
+                      <td className="hidden sm:table-cell px-3 py-2">
                         <CopyButton
                           value={param.value}
                           onCopy={() => {
@@ -186,6 +200,14 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
     
     const { method, parameters } = result.transaction.exec_transaction.decoded;
     
+    const handleCopyValue = (value: string) => {
+      navigator.clipboard.writeText(value);
+      toast({
+        title: "Copied to clipboard",
+        description: `Parameter value has been copied.`,
+      });
+    };
+
     return (
       <div className="space-y-4">
         <div className="space-y-2">
@@ -205,7 +227,7 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
                     <th className="px-3 py-2 text-left font-medium">Name</th>
                     <th className="px-3 py-2 text-left font-medium">Type</th>
                     <th className="px-3 py-2 text-left font-medium">Value</th>
-                    <th className="px-3 py-2 w-[40px]"></th>
+                    <th className="hidden sm:table-cell px-3 py-2 w-[40px]"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -220,14 +242,19 @@ export default function ResultCard({ result, isLoading }: ResultCardProps) {
                       <td className="px-3 py-2">{param.name}</td>
                       <td className="px-3 py-2">{param.type}</td>
                       <td 
-                        className="px-3 py-2 max-w-[200px] overflow-hidden text-ellipsis" 
+                        className="px-3 py-2 break-all" 
                         title={param.value}
+                        onClick={() => {
+                          // Only mobile (<sm) copy at click
+                          const isMobile = window.innerWidth < 640;
+                          if (isMobile) handleCopyValue(param.value);
+                        }}
                       >
                         {typeof param.value === 'string' && param.value.startsWith('0x') && param.value.length > 10 
                           ? `${param.value.substring(0, 6)}...${param.value.substring(param.value.length - 4)}`
                           : param.value}
                       </td>
-                      <td className="px-3 py-2">
+                      <td className="hidden sm:table-cell px-3 py-2">
                         <CopyButton
                           value={param.value}
                           onCopy={() => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
 import { NETWORKS } from "@/app/constants";
@@ -17,12 +17,20 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import PixelAvatar from "@/components/pixel-avatar";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@radix-ui/react-tooltip";
+import { HelpCircle } from "lucide-react";
 
 interface ApiInputFieldsProps {
   form: UseFormReturn<FormData>;
 }
 
 export default function ApiInputFields({ form }: ApiInputFieldsProps) {
+  const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+
+  const handleTooltipToggle = (id: string) => {
+    setActiveTooltip(activeTooltip === id ? null : id);
+  };
+  
   return (
     <div className="space-y-4">
       <div className="bg-muted/20 rounded-lg p-4 mb-4">
@@ -99,6 +107,7 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
               <Input
                 type="number"
                 placeholder="Enter Chain ID"
+                readOnly
                 {...field}
                 onChange={(e) => {
                   const value = parseInt(e.target.value);
@@ -124,7 +133,26 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
         name="address"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Safe Address</FormLabel>
+            <FormLabel className="flex items-center gap-1">Safe Address
+              <Tooltip open={activeTooltip === "safe-address"}>
+                <TooltipTrigger asChild>
+                  <span 
+                    className="cursor-pointer" 
+                    onClick={() => handleTooltipToggle("safe-address")}
+                    onMouseEnter={() => setActiveTooltip("safe-address")}
+                    onMouseLeave={() => setActiveTooltip(null)}
+                  >
+                  <HelpCircle className="ml-1 w-4 h-4 text-muted-foreground" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent 
+                  className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black"
+                  sideOffset={5}
+                > 
+                  <p>Your multisig address.</p>
+                </TooltipContent>
+              </Tooltip>
+            </FormLabel>
             <FormControl>
               <Input
                 placeholder="Enter Safe address (0x...)"
@@ -150,7 +178,26 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
         name="nonce"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Nonce</FormLabel>
+            <FormLabel className="flex items-center gap-1">Nonce
+              <Tooltip open={activeTooltip === "safe-nonce"}>
+                <TooltipTrigger asChild>
+                <span 
+                    className="cursor-pointer" 
+                    onClick={() => handleTooltipToggle("safe-nonce")}
+                    onMouseEnter={() => setActiveTooltip("safe-nonce")}
+                    onMouseLeave={() => setActiveTooltip(null)}
+                  >
+                    <HelpCircle className="ml-1 w-4 h-4 text-muted-foreground" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent 
+                  className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black"
+                  sideOffset={5}
+                > 
+                  <p>The nonce of the transaction you want to validate.</p>
+                </TooltipContent>
+              </Tooltip>
+            </FormLabel>
             <FormControl>
               <Input 
                 placeholder="Enter the transaction nonce"

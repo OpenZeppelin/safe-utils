@@ -35,7 +35,7 @@ function HomeContent() {
       setLastMethod(currentMethod);
     }
     
-    setShowResult(calculationRequested && step >= 4);
+    setShowResult(calculationRequested && (currentMethod === "api" || step >= 4));
   }, [calculationRequested, step, form, lastMethod]);
 
   const renderResultCard = () => {

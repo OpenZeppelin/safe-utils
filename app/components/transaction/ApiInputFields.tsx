@@ -159,9 +159,15 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
                 leftIcon={<PixelAvatar address={field.value} />}
                 {...field}
                 onChange={(e) => {
-                  const address = e.target.value.match(/0x[a-fA-F0-9]{40}/)?.[0];
-                  if (address) {
-                    field.onChange(address);
+                  if (e.target.value === '') {
+                    field.onChange('');
+                  } else {
+                    const address = e.target.value.match(/0x[a-fA-F0-9]{40}/)?.[0];
+                    if (address) {
+                      field.onChange(address);
+                    } else {
+                      field.onChange(e.target.value);
+                    }
                   }
                 }}
               />

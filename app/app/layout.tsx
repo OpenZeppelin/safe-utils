@@ -4,8 +4,8 @@ import './globals.css'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Footer } from '@/components/footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import { Header } from '@/components/header'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import Navbar from '@/components/navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,8 +39,8 @@ export default function RootLayout({
           <TooltipProvider>
             <div className="min-h-screen flex flex-col bg-gradient-main dark:bg-gradient-main-dark">
               <div className="flex flex-col flex-grow">
-                <Header />
-                <main className="flex-grow flex flex-col items-center justify-start py-10">
+                <Navbar />
+                <main className="flex-grow flex flex-col items-center justify-start pt-5 mt-5">
                   {children}
                 </main>
               </div>

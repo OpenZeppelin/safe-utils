@@ -50,7 +50,7 @@ function HomeContent() {
         <h1 className="text-[48px] font-semibold text-center mb-8 dark:text-title-dark text-title-light">
           Safe Utils
         </h1>
-        <Card className="rounded-[24px] sm:p-16 p-5 dark:bg-card-dark bg-card-light w-full sm:w-[620px] mx-4">
+        <Card className="rounded-[24px] sm:p-12 p-5 dark:bg-card-dark bg-card-light w-full sm:w-[620px] mx-4">
           <CardHeader className="flex flex-col items-center">
           <div className="flex items-center gap-2 mb-4 justify-center">
             <Disclaimer className="text-muted-foreground hover:text-foreground text-[14px] flex items-center font-normal">

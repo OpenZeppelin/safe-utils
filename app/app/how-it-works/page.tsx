@@ -3,7 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function HowItWorks() {
   return (
-    <main className="container mx-auto p-8">
+    <main className="container mx-auto p-10">
       {/* <h1 className="text-3xl font-bold mb-8">How It Works</h1> */}
 
       <Card className="mb-8 dark:bg-card-dark bg-card-light">

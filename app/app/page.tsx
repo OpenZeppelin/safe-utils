@@ -48,10 +48,10 @@ function HomeContent() {
     <>
       <Toaster />
       <div className="flex flex-col w-full justify-center items-center p-5">
-        <h1 className="text-[48px] font-semibold text-center mb-2 dark:text-title-dark text-title-light">
+        <h1 className="text-[48px] font-semibold text-center mb-4 dark:text-title-dark text-title-light">
           Safe Utils
         </h1>
-        <div className="text-center max-w-2xl mb-2">
+        <div className="text-center max-w-2xl mb-8">
           <p className="text-muted-foreground">
             Verify Safe transaction hashes before signing and executing. Calculate domain, message, and 
             transaction hashes based on EIP-712 standard.{" "}

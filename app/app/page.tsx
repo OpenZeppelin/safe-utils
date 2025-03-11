@@ -48,10 +48,10 @@ function HomeContent() {
     <>
       <Toaster />
       <div className="flex flex-col w-full justify-center items-center p-5">
-        <h1 className="text-[48px] font-semibold text-center mb-8 dark:text-title-dark text-title-light">
+        <h1 className="text-[48px] font-semibold text-center mb-2 dark:text-title-dark text-title-light">
           Safe Utils
         </h1>
-        <div className="text-center max-w-2xl mb-8">
+        <div className="text-center max-w-2xl mb-2">
           <p className="text-muted-foreground">
             Verify Safe transaction hashes before signing and executing. Calculate domain, message, and 
             transaction hashes based on EIP-712 standard.{" "}
@@ -61,13 +61,6 @@ function HomeContent() {
           </p>
         </div>
         <Card className="rounded-[24px] sm:p-12 p-5 dark:bg-card-dark bg-card-light w-full sm:w-[620px] mx-4">
-          <CardHeader className="flex flex-col items-center">
-          <div className="flex items-center gap-2 mb-4 justify-center">
-            <Disclaimer className="text-muted-foreground hover:text-foreground text-[14px] flex items-center font-normal">
-              Disclaimer
-            </Disclaimer>
-          </div>
-          </CardHeader>
           <CardContent>
             <StepperTransactionForm 
               form={form}

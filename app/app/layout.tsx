@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: '/thumbnail',
+        url: '/thumbnail.png',
         width: 1200,
         height: 630,
         alt: 'OpenZeppelin Safe Utils',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Safe Utils | OpenZeppelin',
     description: 'Preview and calculate Safe transaction hashes for Ethereum and other EVM chains',
-    images: ['/thumbnail'],
+    images: ['/thumbnail.png'],
   },
 }
 

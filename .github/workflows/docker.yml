@@ -21,6 +21,7 @@ jobs:
     env:
       REGISTRY: ghcr.io
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_CHANNEL: '#safe-utils-project'
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@4d991eb9b905ef189e4c376166672c3f2f230481 # v2.11.0
@@ -32,7 +33,7 @@ jobs:
         with:
           status: starting
           steps: ${{ toJson(steps) }}
-          channel: '#safe-utils-project'
+          channel: ${{ env.SLACK_CHANNEL }}
           message: Starting docker build and push to ghcr for ${{ github.repository }}......
         if: always()
       
@@ -87,7 +88,7 @@ jobs:
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          channel: '#safe-utils-project'
+          channel: ${{ env.SLACK_CHANNEL }}
           message: Build and GHCR push to ${{ env.REGISTRY }}/${{ steps.repo_name.outputs.lowercase }} ${{ job.status }}!
         if: always()
 
@@ -102,6 +103,7 @@ jobs:
       ECS_SERVICE: "safe-utils-service"
       AWS_REGION: "us-east-1"
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_CHANNEL: '#safe-utils-project'
     permissions:
       contents: read
       id-token: write # Required for OIDC
@@ -116,7 +118,7 @@ jobs:
         with:
           status: starting
           steps: ${{ toJson(steps) }}
-          channel: '#safe-utils-project'
+          channel: ${{ env.SLACK_CHANNEL }}
           message: Starting deploy to AWS ECS......
 
       - name: Checkout code
@@ -137,6 +139,6 @@ jobs:
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          channel: '#safe-utils-project'
+          channel: ${{ env.SLACK_CHANNEL }}
           message: Deploy to AWS ECS ${{ job.status }}!
         if: always()

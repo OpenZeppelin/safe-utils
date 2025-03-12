@@ -38,6 +38,7 @@ jobs:
     if: needs.check-permission.outputs.is-admin == 'true'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_CHANNEL: '#safe-utils-project'
     runs-on: ubuntu-latest
     environment: Release
     steps:
@@ -51,7 +52,7 @@ jobs:
         with:
           status: starting
           steps: ${{ toJson(steps) }}
-          channel: '#safe-utils-project'
+          channel: ${{ env.SLACK_CHANNEL }}
           message: Starting new release for ${{ github.repository }} triggered by ${{ github.actor }}......
         if: always()
 
@@ -145,7 +146,7 @@ jobs:
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
-          channel: '#safe-utils-project'
+          channel: ${{ env.SLACK_CHANNEL }}
           message: New release ${{ steps.calculate_version.outputs.new_version }} creation ${{ job.status }}!
         if: always()
 

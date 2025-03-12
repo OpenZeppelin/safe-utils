@@ -10,6 +10,7 @@ import Navbar from '@/components/navbar'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://safeutils.openzeppelin.com'),
   title: 'Safe Utils | OpenZeppelin',
   description: 'Preview and calculate Safe transaction hashes for Ethereum and other EVM chains. Verify transaction signatures and domain hashes.',
   keywords: 'Safe, Gnosis Safe, transaction hash, Ethereum, multisig, blockchain, smart contract, EVM',

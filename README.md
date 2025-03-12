@@ -4,7 +4,7 @@ This repository contains both a Bash script and a web interface for calculating 
 
 The project is a fork of [@pcaversaccio](https://x.com/pcaversaccio) bash script, full details of such bash script README can be found at [its original reository](https://github.com/pcaversaccio/safe-tx-hashes-util/blob/main/README.md).
 
-The UI also offers a second methodo to manually input transaction details instead of recovering them from Safe's API.
+The UI also offers a second method to manually input transaction details instead of recovering them from Safe's API.
 
 ## Disclaimer
 
@@ -15,12 +15,14 @@ This tool is intended to be used as a proof of concept and feedback and contribu
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - Node.js (version 14 or later)
 - npm (usually comes with Node.js)
 
 ## Run locally
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/openzeppelin/safe-utils.git
    cd safe-utils
@@ -29,17 +31,20 @@ Before you begin, ensure you have the following installed:
 2. Set up the `safe_hashes.sh` script:
    - Ensure the `safe_hashes.sh` script is located in the parent directory of the app.
    - Make the script executable:
+
      ```bash
      chmod +x ../safe_hashes.sh
      ```
 
 3. Install dependencies:
+
    ```bash
    cd app/
    npm install
    ```
 
 4. Run the development server:
+
    ```bash
    npm run dev
    ```
@@ -51,11 +56,12 @@ Before you begin, ensure you have the following installed:
 For quick and easy access, you can use the hosted version of Safe Hash Preview at [https://safeutils.openzeppelin.com/](https://safeutils.openzeppelin.com/). This version is ready to use without any setup required.
 
 How to use the application:
-   - Choose the calculation method, defaults to Manual Input. Alternative you can use Safe's API which requires less input.
-   - Select a network from the dropdown menu.
-   - Enter the Safe address.
-   - Fill the rest of the data according to your selected method.
-   - Click "Calculate Hashes" to view the results.
+
+- Choose the calculation method, defaults to Manual Input. Alternative you can use Safe's API which requires less input.
+- Select a network from the dropdown menu.
+- Enter the Safe address.
+- Fill the rest of the data according to your selected method.
+- Click "Calculate Hashes" to view the results.
 
 ## Learn More
 
@@ -67,6 +73,6 @@ To learn more about the technologies used in this project, check out the followi
 
 ## Copyright and Contributing
 
-© 2025 Zeppelin Group Ltd. 
+© 2025 Zeppelin Group Ltd.
 
 Contributions are welcome! Please feel free to submit a Pull Request (you'll be required to sign our standard Contribution License Agreement).

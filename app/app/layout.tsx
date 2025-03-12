@@ -19,11 +19,20 @@ export const metadata: Metadata = {
     description: 'Preview and calculate Safe transaction hashes for Ethereum and other EVM chains',
     type: 'website',
     locale: 'en_US',
+    images: [
+      {
+        url: '/thumbnail.png',
+        width: 1200,
+        height: 630,
+        alt: 'OpenZeppelin Safe Utils',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Safe Utils | OpenZeppelin',
     description: 'Preview and calculate Safe transaction hashes for Ethereum and other EVM chains',
+    images: ['/thumbnail.png'],
   },
 }
 

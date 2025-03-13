@@ -427,6 +427,17 @@ const Navbar: React.FC = () => {
 
                 {/* Nav Buttons */}
                 <div className="flex items-center gap-2">
+
+                <div>
+                  <a id="talk_to_an_expert-navbar" className="inline-block py-[7px] px-4 text-[14px] tracking-[-0.02em] rounded-[100px] font-medium leading-[120%] 
+                    text-[#0a0f39] bg-[#fafafa] border border-[#efefef] 
+                    dark:text-[#D8D8D8] dark:bg-transparent 
+                    transition-all duration-200 
+                    hover:bg-[#ededed] hover:text-[rgba(10,15,57,0.8)] 
+                    dark:hover:bg-transparent 
+                    active:bg-[#e1e1e1] whitespace-nowrap text-center" 
+                    href="https://www.openzeppelin.com/request?id=talk_to_an_expert-navbar">Request an Audit</a>
+                </div>
                   <Button variant="ghost" asChild className="text-sm font-medium">
                     {isHowItWorksPage ? (
                       <Link href="/" className="flex items-center gap-2">
@@ -499,6 +510,9 @@ const Navbar: React.FC = () => {
                 </div>
 
                 <ul className={`p-main-nav-mobile-list ${isMenuOpen ? 'block fixed left-0 right-0 bottom-0 overflow-y-auto top-[52px] w-full pt-5 pb-[120px] bg-white dark:bg-[#01030a] z-100' : 'hidden'}`}>
+                  <li className="button-item px-4 max-w-[600px] mx-auto">
+                    <a id="talk_to_an_expert-navbar" className="inline-block w-full py-[10px] px-4 text-[16px] text-center rounded-[100px] font-medium leading-[120%] text-[#0a0f39] bg-[#fafafa] border border-[#efefef] dark:bg-transparent dark:text-[#D8D8D8] transition-all duration-200" href="https://www.openzeppelin.com/request?id=talk_to_an_expert-navbar">Request an Audit</a>
+                  </li>
                   <div className="flex justify-center items-center gap-8 py-2">
                     {/* Docs/Home */}
                     {isHowItWorksPage ? (

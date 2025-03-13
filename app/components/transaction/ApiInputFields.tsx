@@ -33,12 +33,6 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
   
   return (
     <div className="space-y-4">
-      <div className="bg-muted/20 rounded-lg p-4 mb-4">
-        <p className="text-sm text-muted-foreground">
-          Enter the necessary parameters to retrieve transaction details via the Safe API. You need to specify the network, Safe address, and transaction nonce.
-        </p>
-      </div>
-
       <FormField
         control={form.control}
         name="network"

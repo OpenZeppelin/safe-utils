@@ -145,5 +145,19 @@ export const NETWORKS = [
       chainId: 10200,
       gnosisPrefix: "chiado",
       logo: "networks/gnosis.ico",
+    },
+    {
+      value: "swell-testnet",
+      label: "Swell Testnet",
+      chainId: 1924,
+      gnosisPrefix: "swell-l2-testnet",
+      logo: "networks/swell-testnet.ico",
+    },
+    {
+      value: "swell",
+      label: "Swell",
+      chainId: 1923,
+      gnosisPrefix: "swell-l2",
+      logo: "networks/swell.ico",
     }
   ];

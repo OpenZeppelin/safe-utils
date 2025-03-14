@@ -57,6 +57,17 @@ How to use the application:
    - Fill the rest of the data according to your selected method.
    - Click "Calculate Hashes" to view the results.
 
+## Features
+
+- Safe transaction hash calculation for all networks
+- Calculate hashes for transaction execution
+- Calculate domain hash and message hash for EIP-712 signature verification
+- Direct Manual Input method
+- Safe API Integration for transaction retrieval
+- **Paste and Parse**: Easily paste transaction details from Safe UI and automatically fill the form fields
+- **EIP-3770 Support**: Auto-detection of network from chain shortnames (e.g. "eth:", "gnosis:")
+- Zero address expansion: "0x0000...0000" pattern is automatically expanded to the full address
+
 ## Learn More
 
 To learn more about the technologies used in this project, check out the following resources:

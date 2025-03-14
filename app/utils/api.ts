@@ -1,4 +1,5 @@
 import { NETWORKS } from "@/app/constants";
+import { API_URLS } from "@/lib/utils";
 import { TransactionParams } from "@/types/form-types";
 
 export async function fetchTransactionDataFromApi(
@@ -7,11 +8,12 @@ export async function fetchTransactionDataFromApi(
   nonce: string
 ): Promise<TransactionParams> {
   const selectedNetwork = NETWORKS.find((n) => n.value === network);
+
   if (!selectedNetwork) {
     throw new Error(`Network ${network} not found`);
   }
-  
-  const apiUrl = `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
+
+  const apiUrl = API_URLS[network] || `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
   const endpoint = `${apiUrl}/api/v1/safes/${address}/multisig-transactions/?nonce=${nonce}`;
   
   try {

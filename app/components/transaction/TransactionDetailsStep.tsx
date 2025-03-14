@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { HelpCircle } from "lucide-react";
+import PixelAvatar from "../pixel-avatar";
 
 interface TransactionDetailsStepProps {
   form: UseFormReturn<FormData>;
@@ -58,7 +59,23 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
               </Tooltip>
             </FormLabel>
             <FormControl>
-              <Input placeholder="Enter recipient address" {...field} />
+            <Input
+                placeholder="Enter recipient address"
+                leftIcon={<PixelAvatar address={field.value} />}
+                {...field}
+                onChange={(e) => {
+                  if (e.target.value === '') {
+                    field.onChange('');
+                  } else {
+                    const address = e.target.value.match(/0x[a-fA-F0-9]{40}/)?.[0];
+                    if (address) {
+                      field.onChange(address);
+                    } else {
+                      field.onChange(e.target.value);
+                    }
+                  }
+                }}
+              />
             </FormControl>
           </FormItem>
         )}

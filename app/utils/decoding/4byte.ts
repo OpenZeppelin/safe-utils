@@ -6,7 +6,9 @@ export async function fetch4ByteSignature(methodId: string): Promise<string | nu
       const data = await response.json();
       
       if (data.results && data.results.length > 0) {
-        return data.results[0].text_signature;
+        // Sort results by ID (ascending) and take the one with the lowest ID
+        const sortedResults = [...data.results].sort((a, b) => a.id - b.id);
+        return sortedResults[0].text_signature;
       }
       return null;
     } catch (error) {

@@ -152,7 +152,7 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
         txParams.value,
         txParams.data,
         txParams.operation.toString(),
-        txParams.safeTxGas,
+        txParams.safeTxGas.toString(),
         txParams.baseGas,
         txParams.gasPrice,
         txParams.gasToken,

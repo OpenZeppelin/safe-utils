@@ -214,7 +214,26 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
         name="version"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Safe Version</FormLabel>
+            <FormLabel className="flex items-center gap-1">Safe Version
+              <Tooltip open={activeTooltip === "safe-version"}>
+                <TooltipTrigger asChild>
+                  <span 
+                    className="cursor-pointer" 
+                    onClick={() => handleTooltipToggle("safe-version")}
+                    onMouseEnter={() => setActiveTooltip("safe-version")}
+                    onMouseLeave={() => setActiveTooltip(null)}
+                  >
+                    <HelpCircle className="ml-1 w-4 h-4 text-muted-foreground" />
+                  </span>
+                </TooltipTrigger>
+                <TooltipContent 
+                  className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black"
+                  sideOffset={5}
+                > 
+                  <p>You can find your Safe version in the Safe web interface under Settings, or inspecting directly your Safe address on a block explorer. Select the version that matches your Safe deployment.</p>
+                </TooltipContent>
+              </Tooltip>
+            </FormLabel>
             <Select
               onValueChange={field.onChange}
               value={field.value}

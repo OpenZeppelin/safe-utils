@@ -4,7 +4,6 @@ import { Suspense, useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/toaster";
-import { Disclaimer } from "@/components/ui/disclaimer";
 import { useSearchParams } from "next/navigation";
 import { useTransactionCalculation } from "@/hooks/use-transaction-calculation";
 import StepperTransactionForm from "@/components/transaction/StepperTransactionForm";
@@ -55,7 +54,10 @@ function HomeContent() {
           <p className="text-muted-foreground">
             Verify Safe transaction hashes before signing and executing. Calculate domain, message, and 
             transaction hashes based on EIP-712 standard.{" "}
-            <Link href="/how-it-works" className="text-primary hover:underline">
+            <Link 
+            href="/how-it-works" 
+            className="text-primary hover:underline"
+            >
               Learn more.
             </Link>
           </p>

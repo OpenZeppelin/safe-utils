@@ -176,6 +176,7 @@ export default function Result({ result }: any) {
             gasToken={params.gasToken}
             refundReceiver={params.refundReceiver}
             nonce={result.transaction?.nonce}
+            encodedCall={result.transaction?.exec_transaction?.encoded}
           />
         </CollapsibleContent>
       </Collapsible>

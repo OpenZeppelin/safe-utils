@@ -22,8 +22,6 @@ export default function Result({ result }: any) {
   const [hashesExpanded, setHashesExpanded] = useState(true);
   const [transactionExpanded, setTransactionExpanded] = useState(false);
 
-  console.log(result);
-
   if (!result) return null;
   else if (result.error) {
     return <div className="max-w-3xl mx-auto">

@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Copy } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import PixelAvatar from "../pixel-avatar";
+import { useState } from "react";
 
 interface InputFieldProps {
     label: string;
@@ -27,6 +28,19 @@ export default function InputField({
     isAddress = false,
     dataDecoded
 }: InputFieldProps) {
+    const [hasCopied, setHasCopied] = useState(false);
+    const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+
+    const handleCopy = (text: string, index: number) => {
+        navigator.clipboard.writeText(text);
+        setCopiedIndex(index);
+        
+        // Reset the copy icon after 1 second
+        setTimeout(() => {
+            setCopiedIndex(null);
+        }, 1000);
+    };
+
     // Special handling for Data field with decoded data
     if (label === "Data" && dataDecoded) {
         return (
@@ -61,9 +75,13 @@ export default function InputField({
                                                         variant="ghost" 
                                                         size="sm"
                                                         className="h-6 w-6"
-                                                        onClick={() => navigator.clipboard.writeText(param.value)}
+                                                        onClick={() => handleCopy(param.value, index)}
                                                 >
+                                                    {copiedIndex === index ? (
+                                                        <Check className="h-4 w-4" />
+                                                    ) : (
                                                         <Copy className="h-4 w-4" />
+                                                    )}
                                                 </Button>
                                             </div>
                                             

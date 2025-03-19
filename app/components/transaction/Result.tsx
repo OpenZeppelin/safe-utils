@@ -57,25 +57,23 @@ export default function Result({ result }: any) {
           <div className="flex flex-wrap gap-2 items-center flex-1">
             <Badge variant="secondary" className="text-sm px-3 py-1">Nonce: {result.transaction?.nonce}</Badge>
             <Badge variant="secondary" className="text-sm px-3 py-1">Safe Version: {result.transaction?.version}</Badge>
-          </div>
-
-          {/* Network display */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center space-x-2 border-transparent bg-secondary rounded-lg pl-2 pr-3 py-1">
+            <Badge variant="secondary" className="text-sm px-3 py-1 gap-1">
               <Avatar className="h-5 w-5">
                 <AvatarImage
                   src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/${networkLogo}`}
                   alt={result.network?.name || "Network"}
                 />
               </Avatar>
-              <div className="flex flex-col">
-                <div className="font-medium text-sm">{result.network?.name}</div>
-                <div className="text-xs text-muted-foreground -mt-0.5">Chain ID: {result.network?.chain_id}</div>
+              <div className="flex items-end space-x-1">
+                <div className="font-medium text-sm">
+                  {result.network?.name}
+                </div>
+                <div className="text-sm text-muted-foreground -mt-0.5">(Chain ID: {result.network?.chain_id})</div>
               </div>
-            </div>
+
+            </Badge>
           </div>
         </div>
-
         {/* Multisig address */}
         <div className="mt-4">
           <Label htmlFor="multisig-address" className="text-black text-md dark:text-white">Multisig Address</Label>

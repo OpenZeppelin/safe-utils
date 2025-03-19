@@ -189,6 +189,8 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
         transaction: {
           multisig_address: data.address,
           to: txParams.to,
+          nonce: txParams.nonce,
+          version: txParams.version || data.version,
           value: txParams.value,
           data: txParams.data,
           encoded_message: encodedMessage,

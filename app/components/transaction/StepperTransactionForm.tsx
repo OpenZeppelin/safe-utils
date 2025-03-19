@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import { Form } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
@@ -6,14 +6,17 @@ import { FormField, FormItem, FormLabel, FormControl } from "@/components/ui/for
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import DirectInputWizard from "./DirectInputWizard";
 import ApiInputFields from "./ApiInputFields";
+import Result from "./Result";
+import { Button } from "../ui/button";
 
 interface StepperTransactionFormProps {
   form: UseFormReturn<FormData>;
-  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>; 
+  onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   isLoading: boolean;
   step: number;
   nextStep: () => boolean;
   prevStep: () => void;
+  result: any;
 }
 
 export default function StepperTransactionForm({
@@ -22,17 +25,19 @@ export default function StepperTransactionForm({
   isLoading,
   step,
   nextStep,
-  prevStep
+  prevStep,
+  result
 }: StepperTransactionFormProps) {
   const currentMethod = form.watch("method");
   const previousMethodRef = useRef(currentMethod);
   const stepWhenSwitchingRef = useRef(step);
   const resetRequiredRef = useRef(false);
+  const [showApiResult, setShowApiResult] = useState(false);
 
   const resetToStep1 = useCallback(() => {
 
     const stepsToGoBack = stepWhenSwitchingRef.current - 1;
-    
+
     for (let i = 0; i < stepsToGoBack; i++) {
       setTimeout(() => {
         prevStep();
@@ -54,6 +59,12 @@ export default function StepperTransactionForm({
       resetToStep1();
     }
   }, [currentMethod, step, resetToStep1]);
+
+  useEffect(() => {
+    if (result && form.getValues("method") === "api" && isLoading === false) {
+      setShowApiResult(true);
+    }
+  }, [result, form, isLoading]);
 
   const handleCalculationSubmit = async (e?: React.BaseSyntheticEvent) => {
     e?.preventDefault();
@@ -81,6 +92,9 @@ export default function StepperTransactionForm({
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
+                  if (value !== "api") {
+                    setShowApiResult(false);
+                  }
                 }}
                 value={field.value}
               >
@@ -112,11 +126,26 @@ export default function StepperTransactionForm({
             prevStep={prevStep}
             isSubmitting={isLoading}
             calculationSubmit={handleCalculationSubmit}
+            result={result}
           />
+        ) : showApiResult && result ? (
+          <div className="space-y-6">
+            <Result result={result} />
+            <div className="flex pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setShowApiResult(false)}
+                className="px-6 rounded-full border-button text-button hover:bg-transparent dark:bg-white dark:hover:bg-gray-100 dark:text-button h-[48px]"
+              >
+                Back
+              </Button>
+
+            </div>
+          </div>
         ) : (
           <div className="space-y-6">
             <ApiInputFields form={form} />
-
             <div className="flex justify-end pt-4">
               <button
                 type="button"

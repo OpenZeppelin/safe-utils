@@ -6,6 +6,7 @@ import { FormData } from "@/types/form-types";
 import BasicInfoStep from "@/components/transaction/BasicInfoStep";
 import TransactionDetailsStep from "@/components/transaction/TransactionDetailsStep";
 import AdvancedParamsStep from "@/components/transaction/AdvancedParamsStep";
+import Result from "@/components/transaction/Result";
 
 interface DirectInputWizardProps {
   form: UseFormReturn<FormData>;
@@ -14,6 +15,7 @@ interface DirectInputWizardProps {
   prevStep: () => void
   isSubmitting: boolean;
   calculationSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
+  result: any;
 }
 
 export default function DirectInputWizard({ 
@@ -22,7 +24,8 @@ export default function DirectInputWizard({
   nextStep, 
   prevStep, 
   isSubmitting,
-  calculationSubmit
+  calculationSubmit,
+  result
 }: DirectInputWizardProps) {
   const [submitting, setSubmitting] = useState(false);
   const steps = ["Basic Information", "Transaction Details", "Advanced Parameters"];
@@ -58,7 +61,8 @@ export default function DirectInputWizard({
       <div className="min-h-[320px]">
         {step === 1 && <BasicInfoStep form={form} />}
         {step === 2 && <TransactionDetailsStep form={form} />}
-        {(step === 3 || step === 4) && <AdvancedParamsStep form={form} />}
+        {step === 3 && <AdvancedParamsStep form={form} />}
+        {step === 4 && <Result result={result} />}
       </div>
 
       <div className="flex justify-between pt-4">
@@ -67,7 +71,7 @@ export default function DirectInputWizard({
             type="button"
             variant="outline"
             onClick={handleBack}
-            className="px-6 rounded-full border-button text-button hover:bg-transparent dark:bg-white dark:hover:bg-gray-100 h-[48px]"
+            className="px-6 rounded-full border-button text-button hover:bg-transparent dark:bg-white dark:hover:bg-gray-100 dark:text-button h-[48px]"
           >
             Back
           </Button>
@@ -87,7 +91,7 @@ export default function DirectInputWizard({
           </Button>
         )}
         
-        {step >= 3 && (
+        {step === 3 && (
           <Button
             type="button" 
             disabled={isSubmitting}

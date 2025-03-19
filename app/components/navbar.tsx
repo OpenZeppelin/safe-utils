@@ -83,7 +83,19 @@ const Navbar: React.FC = () => {
                 light: 'https://www.openzeppelin.com/hubfs/upgrade-nav.svg',
                 dark: 'https://www.openzeppelin.com/hubfs/upgrades-dark.svg'
               }
-            }
+            },
+            {
+              id: 'safe_utils-navbar',
+              title: 'Safe Utils',
+              href: 'https://safeutils.openzeppelin.com/',
+              target: '_blank',
+              description: 'Verify Safe transactions before signing',
+              icon: {
+                light: 'https://www.openzeppelin.com/hubfs/safe-utils-1.svg',
+                dark: 'https://www.openzeppelin.com/hubfs/safe-utils-dark-1.svg'
+              }
+            },
+
           ]
         },
         {

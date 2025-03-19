@@ -4,11 +4,9 @@ import { Suspense, useEffect, useState } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/toaster";
-import { Disclaimer } from "@/components/ui/disclaimer";
 import { useSearchParams } from "next/navigation";
 import { useTransactionCalculation } from "@/hooks/use-transaction-calculation";
 import StepperTransactionForm from "@/components/transaction/StepperTransactionForm";
-import ResultCard from "@/components/ResultCard";
 import Link from "next/link";
 
 function HomeContent() {
@@ -26,23 +24,13 @@ function HomeContent() {
   } = useTransactionCalculation(searchParams);
 
   const [lastMethod, setLastMethod] = useState(form.watch("method"));
-  const [showResult, setShowResult] = useState(false);
   
   useEffect(() => {
     const currentMethod = form.watch("method");
-    
     if (currentMethod !== lastMethod) {
-      setShowResult(false);
       setLastMethod(currentMethod);
     }
-     
-    setShowResult(calculationRequested && (currentMethod === "api" || step >= 4));
   }, [calculationRequested, step, form, lastMethod]);
-
-  const renderResultCard = () => {
-    if (!showResult) return null;
-    return <ResultCard result={result} isLoading={isLoading} />;
-  };
 
   return (
     <>
@@ -55,12 +43,15 @@ function HomeContent() {
           <p className="text-muted-foreground">
             Verify Safe transaction hashes before signing and executing. Calculate domain, message, and 
             transaction hashes based on EIP-712 standard.{" "}
-            <Link href="/how-it-works" className="text-primary hover:underline">
+            <Link 
+            href="/how-it-works" 
+            className="text-primary hover:underline"
+            >
               Learn more.
             </Link>
           </p>
         </div>
-        <Card className="rounded-[24px] sm:p-12 p-5 dark:bg-card-dark bg-card-light w-full sm:w-[620px] mx-4">
+        <Card className="rounded-[24px] sm:p-12 p-5 dark:bg-card-dark bg-card-light w-full sm:w-[650px] mx-4">
           <CardContent>
             <StepperTransactionForm 
               form={form}
@@ -69,10 +60,10 @@ function HomeContent() {
               step={step}
               nextStep={nextStep}
               prevStep={prevStep}
+              result={result}
             />
           </CardContent>
         </Card>
-        {renderResultCard()}
       </div>
     </>
   );

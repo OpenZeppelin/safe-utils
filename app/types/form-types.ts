@@ -24,6 +24,8 @@ export interface CalculationResult {
     transaction?: {
       multisig_address: string;
       to: string;
+      nonce: string;
+      version: string;
       value: string;
       data: string;
       encoded_message: string;

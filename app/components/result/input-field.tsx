@@ -33,7 +33,7 @@ export default function InputField({
             <div className={`py-2 ${border ? 'border-b border-gray-200' : ''}`}>
                 <div className="flex flex-col space-y-2">
                     <div className="flex justify-between items-center">
-                        <div className="text-gray-500 text-lg">{label}</div>
+                        <div className="text-gray-500 dark:text-gray-300 text-lg">{label}</div>
                         
                         <Popover>
                             <PopoverTrigger asChild>
@@ -57,6 +57,14 @@ export default function InputField({
                                                 <span className="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full text-xs">
                                                     {param.name}
                                                 </span>
+                                                <Button 
+                                                        variant="outline" 
+                                                        size="sm"
+                                                        className="h-6 w-6"
+                                                        onClick={() => navigator.clipboard.writeText(param.value)}
+                                                >
+                                                        <Copy className="h-4 w-4" />
+                                                </Button>
                                             </div>
                                             
                                             <div className="mt-2">
@@ -71,17 +79,6 @@ export default function InputField({
                                                         {param.value}
                                                     </div>
                                                 )}
-                                                
-                                                <div className="flex items-center mt-1">
-                                                    <Button 
-                                                        variant="outline" 
-                                                        size="sm" 
-                                                        className="h-7 text-xs"
-                                                        onClick={() => navigator.clipboard.writeText(param.value)}
-                                                    >
-                                                        <Copy className="h-3 w-3 mr-1" /> Copy Value
-                                                    </Button>
-                                                </div>
                                             </div>
                                         </div>
                                     ))}
@@ -102,7 +99,7 @@ export default function InputField({
     return (
         <div className={`py-2 ${border ? 'border-b border-gray-200' : ''}`}>
             <div className={`flex flex-col ${isLong ? 'space-y-1' : 'sm:flex-row sm:items-center sm:justify-between'}`}>
-                <div className="text-gray-500 text-lg">{label}</div>
+                <div className="text-gray-500 dark:text-gray-300 text-lg">{label}</div>
                 {isAddress ? (
                     <div className="flex  items-center gap-2">
                         <div className="flex h-5 w-5">

@@ -37,28 +37,28 @@ export default function InputField({
                         
                         <Popover>
                             <PopoverTrigger asChild>
-                                <Button variant="outline" size="sm">
+                                <Button variant="secondary" size="sm">
                                     Decode Data
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-96">
+                            <PopoverContent className="w-96 dark:bg-secondary dark:text-secondary-foreground">
                                 <div className="space-y-3">
-                                    <div className={`flex justify-between items-center ${dataDecoded.parameters.length > 0 ? 'border-b pb-2' : ''}`}>
+                                    <div className={`flex justify-between items-center ${dataDecoded.parameters.length > 0 ? 'border-b pb-2 dark:border-gray-200' : ''}`}>
                                         <h4 className="font-medium">Function</h4>
-                                        <span className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-sm">
+                                        <span className="bg-gray-100 dark:bg-gray-500 px-2 py-1 rounded-lg text-sm">
                                             {dataDecoded.method}
                                         </span>
                                     </div>
                                     
                                     {dataDecoded.parameters && dataDecoded.parameters.map((param, index) => (
-                                        <div key={index} className="border-b pb-3 last:border-0">
+                                        <div key={index} className="border-b pb-3 last:border-0 dark:border-gray-200">
                                             <div className="flex items-center gap-2">
-                                                <span className="text-gray-500">{param.type}</span>
-                                                <span className="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full text-xs">
+                                                <span className="text-gray-500 dark:text-gray-300">{param.type}</span>
+                                                <span className="bg-gray-100 dark:bg-gray-500  px-2 py-0.5 rounded-full text-xs">
                                                     {param.name}
                                                 </span>
                                                 <Button 
-                                                        variant="outline" 
+                                                        variant="ghost" 
                                                         size="sm"
                                                         className="h-6 w-6"
                                                         onClick={() => navigator.clipboard.writeText(param.value)}

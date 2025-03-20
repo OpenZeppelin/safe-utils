@@ -178,9 +178,9 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
         txParams.gasToken,
         txParams.refundReceiver,
         txParams.nonce,
-        txParams.version || data.version
+        txParams.version
       );
-  
+
       setResult({
         network: {
           name: NETWORKS.find(n => n.value === data.network)?.label || data.network,
@@ -190,7 +190,7 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
           multisig_address: data.address,
           to: txParams.to,
           nonce: txParams.nonce,
-          version: txParams.version || data.version,
+          version: txParams.version,
           value: txParams.value,
           data: txParams.data,
           encoded_message: encodedMessage,

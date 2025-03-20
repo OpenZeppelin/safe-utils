@@ -1,6 +1,27 @@
 import { NETWORKS } from "@/app/constants";
 import { TransactionParams } from "@/types/form-types";
 
+// Function to get Safe version
+export async function fetchSafeVersion(network: string, address: string): Promise<string> {
+  const apiUrl = `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
+  const endpoint = `${apiUrl}/api/v1/safes/${address}/`;
+
+  try {
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(`Safe contract not found at address ${address} on network ${network}`);
+    }
+    
+    const data = await response.json();
+    // Get version and remove any suffix after '+'
+    const version = (data.version || "0.0.0").split('+')[0];
+    return version;
+  } catch (error) {
+    console.error("Error fetching Safe version:", error);
+    throw error;
+  }
+}
+
 export async function fetchTransactionDataFromApi(
   network: string,
   address: string,
@@ -29,6 +50,9 @@ export async function fetchTransactionDataFromApi(
     } else if (count > 1) {
       throw new Error("Multiple transactions with the same nonce value were detected.");
     }
+
+    // Get version first
+    const version = await fetchSafeVersion(network, address);
     
     const idx = 0;
     return {
@@ -43,7 +67,7 @@ export async function fetchTransactionDataFromApi(
       refundReceiver: data.results[idx].refundReceiver || "0x0000000000000000000000000000000000000000",
       nonce: data.results[idx].nonce || "0",
       dataDecoded: data.results[idx].dataDecoded || null,
-      version: data.results[idx].version || "1.3.0"
+      version: version
     };
   } catch (error: any) {
     throw new Error(`API Error: ${error.message}`);

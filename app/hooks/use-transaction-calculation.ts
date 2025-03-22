@@ -23,10 +23,12 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
     const prefix = safeAddress.split(":")[0];
     return NETWORKS.find((n) => n.gnosisPrefix === prefix)?.value || "";
   });
+
   const [chainId] = useState(() => {
     const prefix = safeAddress.split(":")[0];
     return NETWORKS.find((n) => n.gnosisPrefix === prefix)?.chainId || "";
   });
+
   const [address] = useState(() => {
     const _address = safeAddress.match(/0x[a-fA-F0-9]{40}/)?.[0];
     if (_address) {
@@ -35,6 +37,7 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
       return "";
     }
   });
+
   const [nonce] = useState(searchParams.get("nonce") || "");
 
   // Initialize form
@@ -181,6 +184,46 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
         txParams.version
       );
 
+      let nestedSafe = null;
+      if (data.nestedSafeEnabled && data.nestedSafeAddress && data.nestedSafeNonce) {
+
+        const to = data.address;
+        const value = "0";
+        const approveHashSignature = "0xd4d9bdcd"; //approveHash(bytes32)
+        const dataPayload = `${approveHashSignature}${safeTxHash.slice(2)}`;
+        const operation = "0";
+        const safeTxGas = "0";
+        const baseGas = "0";
+        const gasPrice = "0";
+        const gasToken = "0x0000000000000000000000000000000000000000";
+        const refundReceiver = "0x0000000000000000000000000000000000000000";
+        
+        const nestedSafeVersion = data.nestedSafeVersion || txParams.version;
+
+        const nestedSafeResult = await calculateHashes(
+          data.chainId.toString(),
+          data.nestedSafeAddress,
+          to,
+          value,
+          dataPayload,
+          operation,
+          safeTxGas,
+          baseGas,
+          gasPrice,
+          gasToken,
+          refundReceiver,
+          data.nestedSafeNonce.toString(),
+          nestedSafeVersion
+        );
+
+        nestedSafe = {
+          safeTxHash: nestedSafeResult.safeTxHash,
+          domainHash: nestedSafeResult.domainHash,
+          messageHash: nestedSafeResult.messageHash,
+          encodedMessage: nestedSafeResult.encodedMessage
+        };
+      }
+
       setResult({
         network: {
           name: NETWORKS.find(n => n.value === data.network)?.label || data.network,
@@ -208,8 +251,10 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
           domain_hash: domainHash,
           message_hash: messageHash,
           safe_transaction_hash: safeTxHash,
-        }
+        },
+        nestedSafe: nestedSafe
       });
+
     } catch (error: any) {
       console.error("Error:", error);
       

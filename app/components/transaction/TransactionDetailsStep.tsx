@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
 import { 
@@ -16,16 +16,40 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
-import { HelpCircle } from "lucide-react";
+import { AlertTriangle, HelpCircle, Search } from "lucide-react";
 import PixelAvatar from "../pixel-avatar";
+import { trustedAddresses } from "../result/trusted-addresses";
+import { Alert, AlertDescription } from "../ui/alert";
 
 interface TransactionDetailsStepProps {
   form: UseFormReturn<FormData>;
 }
 
+const shortenAddress = (address: string) => {
+  if (!address || address.length < 10) return address;
+  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+};
+
 export default function TransactionDetailsStep({ form }: TransactionDetailsStepProps) {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
-
+  const operationValue = form.watch("operation");
+  const toValue = form.watch("to");
+  const [isTrustedAddress, setIsTrustedAddress] = useState(false);
+  const isDelegateCall = operationValue === "1";
+  
+  useEffect(() => {
+    if (!toValue) {
+      setIsTrustedAddress(false);
+      return;
+    }
+    
+    const normalizedToValue = toValue.toLowerCase();
+    const isTrusted = trustedAddresses.some(
+      address => address.toLowerCase() === normalizedToValue
+    );
+    setIsTrustedAddress(isTrusted);
+  }, [toValue]);
+  
   const handleTooltipToggle = (id: string) => {
     setActiveTooltip(activeTooltip === id ? null : id);
   };
@@ -160,7 +184,7 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
                   </span>
                 </TooltipTrigger>
                 <TooltipContent className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black">
-                  <p>WARNING: rarely this field is a delegatecall. If so, make sure you understand what the transaction is doing.</p>
+                  <p>Rarely this field is a delegatecall. If so, make sure you understand what the transaction is doing.</p>
                 </TooltipContent>
               </Tooltip>
             </FormLabel>
@@ -181,6 +205,33 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
           </FormItem>
         )}
       />
+
+      {isDelegateCall && toValue && (
+        isTrustedAddress ? (
+          <Alert variant="default" className="bg-blue-50/50 dark:bg-blue-950/50 flex items-center gap-4">
+            <div className="flex-shrink-0">
+              <Search className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            </div>
+            <div>
+              <AlertDescription className="text-blue-600 dark:text-blue-300">
+                This transaction includes a trusted delegate call to {shortenAddress(toValue)}.
+              </AlertDescription>
+            </div>
+          </Alert>
+        ) : (
+          <Alert variant="warning" className="flex items-center gap-4">
+            <div className="flex-shrink-0">
+              <AlertTriangle className="h-6 w-6" />
+            </div>
+            <div>
+              <AlertDescription className="">
+                This transaction includes an untrusted delegate call to {shortenAddress(toValue)}! 
+                This may lead to unexpected behavior or vulnerabilities.
+              </AlertDescription>
+            </div>
+          </Alert>
+        )
+      )}
     </div>
     </TooltipProvider>
   );

@@ -101,6 +101,8 @@ declare -A -r API_URLS=(
     ["worldchain"]="https://safe-transaction-worldchain.safe.global"
     ["xlayer"]="https://safe-transaction-xlayer.safe.global"
     ["zksync"]="https://safe-transaction-zksync.safe.global"
+    ["swell"]="https://trx-swell.safe.protofire.io"
+    ["swell-testnet"]="https://trx-swell-testnet.safe.protofire.io"
 )
 
 # Define the chain IDs of the supported networks from the Safe transaction service.
@@ -126,6 +128,8 @@ declare -A -r CHAIN_IDS=(
     ["worldchain"]="480"
     ["xlayer"]="195"
     ["zksync"]="324"
+    ["swell"]="1923"
+    ["swell-testnet"]="1924"
 )
 
 # Utility function to display the usage information.

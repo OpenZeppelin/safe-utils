@@ -186,11 +186,11 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
 
       let nestedSafe = null;
       if (data.nestedSafeEnabled && data.nestedSafeAddress && data.nestedSafeNonce) {
-        // Parametri fissi per la transazione approveHash
+
         const to = data.address;
         const value = "0";
         const approveHashSignature = "0xd4d9bdcd"; //approveHash(bytes32)
-        const dataPayload = `${approveHashSignature}${safeTxHash.slice(2)}`; // Rinominato 'data' a 'dataPayload'
+        const dataPayload = `${approveHashSignature}${safeTxHash.slice(2)}`;
         const operation = "0";
         const safeTxGas = "0";
         const baseGas = "0";

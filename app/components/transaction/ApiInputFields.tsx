@@ -26,6 +26,7 @@ interface ApiInputFieldsProps {
 
 export default function ApiInputFields({ form }: ApiInputFieldsProps) {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const nestedSafeEnabled = form.watch("nestedSafeEnabled");
 
   const handleTooltipToggle = (id: string) => {
     setActiveTooltip(activeTooltip === id ? null : id);
@@ -210,6 +211,69 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={form.control}
+        name="nestedSafeEnabled"
+        render={({ field }) => {
+          const { value, ...inputProps } = field;
+          return (
+            <FormItem className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                {...inputProps}
+                checked={!!value}
+                onChange={(e) => field.onChange(e.target.checked)}
+                className="h-4 w-4"
+              />
+              <FormLabel>Use Nested Safe</FormLabel>
+            </FormItem>
+          );
+        }}
+      />
+
+      {nestedSafeEnabled && (
+        <>
+          <FormField
+            control={form.control}
+            name="nestedSafeAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter nested safe address (0x...)"
+                    {...field}
+                  />
+                </FormControl>
+                <p className="text-xs text-muted-foreground mt-1">
+                  The nested safe address (retrieved via API version).
+                </p>
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="nestedSafeNonce"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Nonce</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter nested safe nonce"
+                    {...field}
+                  />
+                </FormControl>
+                <p className="text-xs text-muted-foreground mt-1">
+                  The nested safe transaction nonce.
+                </p>
+              </FormItem>
+            )}
+          />
+        </>
+      )}
     </div>
   );
 }

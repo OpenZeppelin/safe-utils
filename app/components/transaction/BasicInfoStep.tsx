@@ -288,6 +288,19 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                   <Input
                     placeholder="Enter nested safe address (0x...)"
                     {...field}
+                    value={field.value || ''}
+                    onChange={(e) => {
+                      if (e.target.value === '') {
+                        field.onChange('');
+                      } else {
+                        const address = e.target.value.match(/0x[a-fA-F0-9]{40}/)?.[0];
+                        if (address) {
+                          field.onChange(address);
+                        } else {
+                          field.onChange(e.target.value);
+                        }
+                      }
+                    }}
                   />
                 </FormControl>
               </FormItem>
@@ -305,6 +318,7 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                     type="number"
                     placeholder="Enter nested safe nonce"
                     {...field}
+                    value={field.value || ''}
                   />
                 </FormControl>
               </FormItem>
@@ -321,6 +335,7 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                   <Input
                     placeholder="Enter nested safe version"
                     {...field}
+                    value={field.value || ''}
                   />
                 </FormControl>
                 <p className="text-xs text-muted-foreground mt-1">

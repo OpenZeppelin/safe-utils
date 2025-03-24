@@ -8,7 +8,7 @@ import PixelAvatar from "@/components/pixel-avatar";
 import { Separator } from "@/components/ui/separator";
 import HashDetails from "../result/hash-details";
 import TransactionDetails from "../result/transaction-details";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { NETWORKS } from "@/app/constants";
 import { trustedAddresses } from "../result/trusted-addresses";
@@ -41,11 +41,15 @@ export default function Result({ result }: any) {
   const execParams = result.transaction?.exec_transaction?.decoded?.parameters;
 
   // Mapping the parameters by name for easy access
-  const params = execParams ? execParams.reduce((acc: any, param: any) => {
-    acc[param.name] = param.value;
-    return acc;
-  }, {}) : {};
-
+  const params = useMemo(() => {
+    return execParams
+      ? execParams.reduce((acc: any, param: any) => {
+          acc[param.name] = param.value;
+          return acc;
+        }, {})
+      : {};
+  }, [execParams]);
+  
   const networkDetails = result.network?.name ?
     NETWORKS.find((n) => n.value === result.network.name || n.label === result.network.name) :
     null;

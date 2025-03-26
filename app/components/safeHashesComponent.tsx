@@ -3,6 +3,7 @@ import { AbiCoder } from 'ethers';
 
 // Set the type hash constants
 const DOMAIN_SEPARATOR_TYPEHASH = "0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218";
+const DOMAIN_SEPARATOR_TYPEHASH_OLD = "0x035aff83d86937d35b32e04f0ddc6ff469290eef2f1b692d8a815c89404d4749";
 const SAFE_TX_TYPEHASH = "0xbb8310d486368db6bd6f849402fdd73ad53d316b5a4b2644ad6efe0f941286d8";
 const SAFE_TX_TYPEHASH_OLD = "0x14d461bc7412367e924637b363c7bf29b8f47e2f84869f4426e5633d8af47b20";
 
@@ -39,7 +40,7 @@ function calculateDomainHash(version: string, safeAddress: string, chainId: stri
   if (compareVersions(cleanVersion, "1.2.0") <= 0) {
     encodedData = encodeAbi(
       ['bytes32', 'address'],
-      [DOMAIN_SEPARATOR_TYPEHASH, safeAddress]
+      [DOMAIN_SEPARATOR_TYPEHASH_OLD, safeAddress]
     );
   } else {
     encodedData = encodeAbi(

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import {blo} from "blo";
+import {blo} from 'blo';
 
 interface PixelAvatarProps {
   address: string;

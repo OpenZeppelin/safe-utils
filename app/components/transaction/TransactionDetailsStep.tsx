@@ -61,7 +61,7 @@ export default function TransactionDetailsStep({ form }: TransactionDetailsStepP
             <FormControl>
             <Input
                 placeholder="Enter recipient address"
-                leftIcon={<PixelAvatar address={field.value} />}
+                leftIcon={<PixelAvatar hexValue={field.value} />}
                 {...field}
                 onChange={(e) => {
                   if (e.target.value === '') {

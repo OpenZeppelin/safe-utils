@@ -9,7 +9,6 @@ interface InputFieldProps {
     value: string;
     isLong?: boolean;
     isAddress?: boolean;
-    isHash?: boolean;
     border?: boolean;
     dataDecoded?: {
         method: string;
@@ -27,7 +26,6 @@ export default function InputField({
     isLong = false,
     border = true,
     isAddress = false,
-    isHash = false,
     dataDecoded
 }: InputFieldProps) {
     const [hasCopied, setHasCopied] = useState(false);
@@ -124,15 +122,6 @@ export default function InputField({
                     <div className="flex  items-center gap-2">
                         <div className="flex h-7.5 w-7.5">
                         <PixelAvatar hexValue={value} />
-                        </div>
-                        <div className="text-md break-all">
-                            {value}
-                        </div>
-                    </div>
-                ) : isHash ? (
-                    <div className="flex  items-center gap-2">
-                        <div className="flex h-7.5 w-7.5">
-                            <PixelAvatar hexValue={value} size={40} />
                         </div>
                         <div className="text-md break-all">
                             {value}

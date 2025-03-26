@@ -16,9 +16,9 @@ export default function HashDetails({
   return (
     <div className={`space-y-5 ${className}`}>
       <div className="border rounded-md p-4 space-y-3 dark:border-gray-200">
-        <InputField label="SafeTxHash" value={safeTxHash} isLong isHash/>
-        <InputField label="Domain Hash" value={domainHash} isLong isHash/>
-        <InputField label="Message Hash" value={messageHash} isLong isHash border={false}/>
+        <InputField label="SafeTxHash" value={safeTxHash} isLong/>
+        <InputField label="Domain Hash" value={domainHash} isLong/>
+        <InputField label="Message Hash" value={messageHash} isLong border={false}/>
       </div>
     </div>
   );

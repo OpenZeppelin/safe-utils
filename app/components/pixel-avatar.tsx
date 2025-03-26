@@ -6,12 +6,13 @@ interface PixelAvatarProps {
   size?: number;
 }
 
-const PixelAvatar: React.FC<PixelAvatarProps> = ({ hexValue, size = 30 }) => {
+const PixelAvatar: React.FC<PixelAvatarProps> = ({ hexValue, size = 20 }) => {
   const style = useMemo(() => {
     const blockie = blo(hexValue as `0x${string}`)
     return {
       backgroundImage: `url(${blockie})`,
       backgroundSize: 'contain',
+      borderRadius: '50%',
       width: `${size}px`,
       height: `${size}px`,
     }
@@ -23,4 +24,3 @@ const PixelAvatar: React.FC<PixelAvatarProps> = ({ hexValue, size = 30 }) => {
 };
 
 export default PixelAvatar;
-

@@ -157,7 +157,7 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
             <FormControl>
               <Input
                 placeholder="Enter Safe address"
-                leftIcon={<PixelAvatar address={field.value} />}
+                leftIcon={<PixelAvatar hexValue={field.value} />}
                 {...field}
                 onChange={(e) => {
                   if (e.target.value === '') {

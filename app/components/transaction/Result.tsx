@@ -81,7 +81,7 @@ export default function Result({ result }: any) {
               value={result.transaction?.multisig_address}
               readOnly
               className="text-md"
-              leftIcon={<PixelAvatar hexValue={result.transaction?.multisig_address} />}
+              leftIcon={<PixelAvatar address={result.transaction?.multisig_address} />}
             />
           </div>
         </div>

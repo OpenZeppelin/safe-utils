@@ -121,7 +121,7 @@ export default function InputField({
                 {isAddress ? (
                     <div className="flex  items-center gap-2">
                         <div className="flex h-7.5 w-7.5">
-                        <PixelAvatar hexValue={value} />
+                        <PixelAvatar address={value} />
                         </div>
                         <div className="text-md break-all">
                             {value}

@@ -150,7 +150,7 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
             <FormControl>
               <Input
                 placeholder="Enter Safe address (0x...)"
-                leftIcon={<PixelAvatar hexValue={field.value} />}
+                leftIcon={<PixelAvatar address={field.value} />}
                 {...field}
                 onChange={(e) => {
                   if (e.target.value === '') {

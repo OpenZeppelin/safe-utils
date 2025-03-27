@@ -90,7 +90,7 @@ export default function AdvancedParamsStep({ form }: AdvancedParamsStepProps) {
           <FormItem>
             <FormLabel>Gas token</FormLabel>
             <FormControl>
-              <Input placeholder="Enter gasToken address" leftIcon={<PixelAvatar hexValue={field.value} />} {...field} />
+              <Input placeholder="Enter gasToken address" leftIcon={<PixelAvatar address={field.value} />} {...field} />
             </FormControl>
           </FormItem>
         )}
@@ -103,7 +103,7 @@ export default function AdvancedParamsStep({ form }: AdvancedParamsStepProps) {
           <FormItem>
             <FormLabel>Refund receiver</FormLabel>
             <FormControl>
-              <Input placeholder="Enter refundReceiver address" leftIcon={<PixelAvatar hexValue={field.value} />} {...field} />
+              <Input placeholder="Enter refundReceiver address" leftIcon={<PixelAvatar address={field.value} />} {...field} />
             </FormControl>
           </FormItem>
         )}

@@ -27,7 +27,9 @@ export const API_URLS: { [key: string]: string } = {
   sepolia: "https://safe-transaction-sepolia.safe.global",
   worldchain: "https://safe-transaction-worldchain.safe.global",
   xlayer: "https://safe-transaction-xlayer.safe.global",
-  zksync: "https://safe-transaction-zksync.safe.global"
+  zksync: "https://safe-transaction-zksync.safe.global",
+  swell: "https://trx-swell.safe.protofire.io",
+  "swell-testnet": "https://trx-swell-testnet.safe.protofire.io",
 }
 
 export function isValidNetwork(network: string): boolean {

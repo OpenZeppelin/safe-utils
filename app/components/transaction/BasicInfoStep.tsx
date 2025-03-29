@@ -26,6 +26,7 @@ interface BasicInfoStepProps {
 
 export default function BasicInfoStep({ form }: BasicInfoStepProps) {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const nestedSafeEnabled = form.watch("nestedSafeEnabled");
 
   const handleTooltipToggle = (id: string) => {
     setActiveTooltip(activeTooltip === id ? null : id);
@@ -254,6 +255,97 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={form.control}
+        name="nestedSafeEnabled"
+        render={({ field }) => {
+          const { value, ...inputProps } = field;
+          return (
+            <FormItem className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                {...inputProps}
+                checked={!!value}
+                onChange={(e) => field.onChange(e.target.checked)}
+                className="h-4 w-4"
+              />
+              <FormLabel>Use Nested Safe</FormLabel>
+            </FormItem>
+          );
+        }}
+      />
+
+      {nestedSafeEnabled && (
+        <>
+          <FormField
+            control={form.control}
+            name="nestedSafeAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter nested safe address (0x...)"
+                    {...field}
+                    value={field.value || ''}
+                    onChange={(e) => {
+                      if (e.target.value === '') {
+                        field.onChange('');
+                      } else {
+                        const address = e.target.value.match(/0x[a-fA-F0-9]{40}/)?.[0];
+                        if (address) {
+                          field.onChange(address);
+                        } else {
+                          field.onChange(e.target.value);
+                        }
+                      }
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="nestedSafeNonce"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Nonce</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter nested safe nonce"
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="nestedSafeVersion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Version</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter nested safe version"
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Specify the nested Safe version.
+                </p>
+              </FormItem>
+            )}
+          />
+        </>
+      )}
     </div>
     </TooltipProvider>
   );

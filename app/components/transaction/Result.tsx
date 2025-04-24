@@ -113,16 +113,16 @@ export default function Result({ result }: any) {
         {!hashesExpanded && (
           <div className="mt-2 text-sm text-muted-foreground flex items-center gap-2 cursor-pointer" onClick={() => setHashesExpanded(true)}>
             <span className="text-primary cursor-pointer">
-              Click to see SafeTxHash, Domain Hash, and Message Hash
+              Click to see Domain Hash, Message Hash, and SafeTxHash
             </span>
           </div>
         )}
 
         <CollapsibleContent className="mt-4">
           <HashDetails
-            safeTxHash={result.hashes?.safe_transaction_hash}
             domainHash={result.hashes?.domain_hash}
             messageHash={result.hashes?.message_hash}
+            safeTxHash={result.hashes?.safe_transaction_hash}
           />
         </CollapsibleContent>
       </Collapsible>

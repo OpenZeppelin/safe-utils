@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@radix-ui/react-tooltip";
 import { HelpCircle } from "lucide-react";
+import PixelAvatar from "@/components/pixel-avatar";
 
 interface AdvancedParamsStepProps {
   form: UseFormReturn<FormData>;
@@ -89,7 +90,7 @@ export default function AdvancedParamsStep({ form }: AdvancedParamsStepProps) {
           <FormItem>
             <FormLabel>Gas token</FormLabel>
             <FormControl>
-              <Input placeholder="Enter gasToken address" {...field} />
+                <Input placeholder="Enter gasToken address" leftIcon={<PixelAvatar address={field.value} />} {...field} />
             </FormControl>
           </FormItem>
         )}
@@ -102,7 +103,7 @@ export default function AdvancedParamsStep({ form }: AdvancedParamsStepProps) {
           <FormItem>
             <FormLabel>Refund receiver</FormLabel>
             <FormControl>
-              <Input placeholder="Enter refundReceiver address" {...field} />
+                <Input placeholder="Enter refundReceiver address" leftIcon={<PixelAvatar address={field.value} />} {...field} />
             </FormControl>
           </FormItem>
         )}

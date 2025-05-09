@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
 import { NETWORKS } from "@/app/constants";
@@ -27,6 +27,14 @@ interface BasicInfoStepProps {
 export default function BasicInfoStep({ form }: BasicInfoStepProps) {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   const nestedSafeEnabled = form.watch("nestedSafeEnabled");
+  const mainSafeVersion = form.watch("version");
+  
+  // Set nested safe version to match main safe version when enabled
+  useEffect(() => {
+    if (nestedSafeEnabled && mainSafeVersion && !form.getValues("nestedSafeVersion")) {
+      form.setValue("nestedSafeVersion", mainSafeVersion);
+    }
+  }, [nestedSafeEnabled, mainSafeVersion, form]);
 
   const handleTooltipToggle = (id: string) => {
     setActiveTooltip(activeTooltip === id ? null : id);
@@ -332,15 +340,25 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Nested Safe Version</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter nested safe version"
-                    {...field}
-                    value={field.value || ''}
-                  />
-                </FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ''}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select nested Safe version" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {["0.0.1", "0.1.0", "1.0.0", "1.1.0", "1.1.1", "1.2.0", "1.3.0", "1.4.1"].map((version) => (
+                      <SelectItem key={version} value={version}>
+                        {version}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Specify the nested Safe version.
+                  Defaults to same version as main Safe but can be changed if needed.
                 </p>
               </FormItem>
             )}

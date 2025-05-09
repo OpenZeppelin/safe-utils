@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
 import { NETWORKS } from "@/app/constants";
@@ -26,6 +26,15 @@ interface BasicInfoStepProps {
 
 export default function BasicInfoStep({ form }: BasicInfoStepProps) {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
+  const nestedSafeEnabled = form.watch("nestedSafeEnabled");
+  const mainSafeVersion = form.watch("version");
+  
+  // Set nested safe version to match main safe version when enabled
+  useEffect(() => {
+    if (nestedSafeEnabled && mainSafeVersion && !form.getValues("nestedSafeVersion")) {
+      form.setValue("nestedSafeVersion", mainSafeVersion);
+    }
+  }, [nestedSafeEnabled, mainSafeVersion, form]);
 
   const handleTooltipToggle = (id: string) => {
     setActiveTooltip(activeTooltip === id ? null : id);
@@ -254,6 +263,108 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
           </FormItem>
         )}
       />
+
+      <FormField
+        control={form.control}
+        name="nestedSafeEnabled"
+        render={({ field }) => {
+          const { value, ...inputProps } = field;
+          return (
+            <FormItem className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                {...inputProps}
+                checked={!!value}
+                onChange={(e) => field.onChange(e.target.checked)}
+                className="h-4 w-4"
+              />
+              <FormLabel className="!mt-0.5">Use Nested Safe</FormLabel>
+            </FormItem>
+          );
+        }}
+      />
+
+      {nestedSafeEnabled && (
+        <>
+          <FormField
+            control={form.control}
+            name="nestedSafeAddress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Address</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter nested safe address (0x...)"
+                    leftIcon={<PixelAvatar address={field.value || ''} />}
+                    {...field}
+                    value={field.value || ''}
+                    onChange={(e) => {
+                      if (e.target.value === '') {
+                        field.onChange('');
+                      } else {
+                        const address = e.target.value.match(/0x[a-fA-F0-9]{40}/)?.[0];
+                        if (address) {
+                          field.onChange(address);
+                        } else {
+                          field.onChange(e.target.value);
+                        }
+                      }
+                    }}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          
+          <FormField
+            control={form.control}
+            name="nestedSafeNonce"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Nonce</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Enter nested safe nonce"
+                    {...field}
+                    value={field.value || ''}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="nestedSafeVersion"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nested Safe Version</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  value={field.value || ''}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select nested Safe version" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {["0.0.1", "0.1.0", "1.0.0", "1.1.0", "1.1.1", "1.2.0", "1.3.0", "1.4.1"].map((version) => (
+                      <SelectItem key={version} value={version}>
+                        {version}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Defaults to same version as main Safe but can be changed if needed.
+                </p>
+              </FormItem>
+            )}
+          />
+        </>
+      )}
     </div>
     </TooltipProvider>
   );

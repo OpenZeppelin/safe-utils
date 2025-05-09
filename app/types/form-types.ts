@@ -14,6 +14,10 @@ export interface FormData {
     refundReceiver: string;
     nonce: string;
     version: string;
+    nestedSafeEnabled?: boolean;
+    nestedSafeAddress?: string;
+    nestedSafeNonce?: number;
+    nestedSafeVersion?: string;
 }
   
 export interface CalculationResult {
@@ -49,6 +53,12 @@ export interface CalculationResult {
       safe_transaction_hash: string;
     };
     error?: string;
+    nestedSafe?: {
+      safeTxHash: string;
+      domainHash: string;
+      messageHash: string;
+      encodedMessage: string;
+    } | null;
 }
   
 export interface TransactionParams {

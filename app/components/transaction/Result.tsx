@@ -179,7 +179,7 @@ export default function Result({ result }: any) {
             className="flex items-center gap-1 text-amber-600 dark:text-amber-500"
           >
             <AlertTriangle className="h-6 w-6" />
-            <span className="font-medium">{warnings.length}</span>
+            <span className="font-medium">{warnings.length} {warnings.length === 1 ? 'Warning' : 'Warnings'}</span>
           </Button>
         )}
         {infoNotices.length > 0 && (
@@ -190,7 +190,7 @@ export default function Result({ result }: any) {
             className="flex items-center gap-1 text-blue-600 dark:text-blue-400"
           >
             <Search className="h-6 w-6" />
-            <span className="font-medium">{infoNotices.length}</span>
+            <span className="font-medium">{infoNotices.length} Info</span>
           </Button>
         )}
       </div>

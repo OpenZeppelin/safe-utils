@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import {blo} from 'blo';
 
 interface PixelAvatarProps {
   address: string;
@@ -6,40 +7,19 @@ interface PixelAvatarProps {
 }
 
 const PixelAvatar: React.FC<PixelAvatarProps> = ({ address, size = 20 }) => {
-  const generateColor = () => {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return `rgb(${r},${g},${b})`;
-  };
-
-  const pixels = useMemo(() => {
-    const seed = parseInt(address.slice(2, 10), 16);
-    const pixelArray = [];
-    for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < 5; j++) {
-        if ((seed >> (i * 5 + j)) & 1) {
-          pixelArray.push(
-            <rect
-              key={`${i}-${j}`}
-              x={i * 4}
-              y={j * 4}
-              width="4"
-              height="4"
-              fill={generateColor()}
-            />
-          );
-        }
-      }
+  const style = useMemo(() => {
+    const blockie = blo(address as `0x${string}`)
+    return {
+      backgroundImage: `url(${blockie})`,
+      backgroundSize: 'contain',
+      borderRadius: '50%',
+      width: `${size}px`,
+      height: `${size}px`,
     }
-    return pixelArray;
-  }, [address]);
+  }, [address, size]);
 
   return (
-    <svg width={size} height={size} viewBox="0 0 20 20">
-      <rect width="20" height="20" fill="#f0f0f0" />
-      {pixels}
-    </svg>
+      <div style={style}/>
   );
 };
 

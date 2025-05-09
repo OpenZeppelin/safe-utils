@@ -120,10 +120,10 @@ export default function InputField({
                 <div className="text-gray-500 dark:text-gray-300 text-lg">{label}</div>
                 {isAddress ? (
                     <div className="flex  items-center gap-2">
-                        <div className="flex h-5 w-5">
-                        <PixelAvatar address={value} />
+                        <div className="flex h-7.5 w-7.5">
+                            <PixelAvatar address={value}/>
                         </div>
-                        <div className="text-md break-all mt-1">
+                        <div className="text-md break-all">
                             {value}
                         </div>
                     </div>

@@ -24,7 +24,7 @@ export default function Result({ result }: any) {
   const [transactionExpanded, setTransactionExpanded] = useState(false);
   const [warningsExpanded, setWarningsExpanded] = useState(false);
   const [infoExpanded, setInfoExpanded] = useState(false);
-  const [nestedSafeExpanded, setNestedSafeExpanded] = useState(false);
+  const [nestedSafeExpanded, setNestedSafeExpanded] = useState(true);
 
   // States for warnings and informational notices
   const [warnings, setWarnings] = useState<{title: string, description: string}[]>([]);

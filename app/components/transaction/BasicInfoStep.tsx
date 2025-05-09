@@ -287,6 +287,7 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                 <FormControl>
                   <Input
                     placeholder="Enter nested safe address (0x...)"
+                    leftIcon={<PixelAvatar address={field.value || ''} />}
                     {...field}
                     value={field.value || ''}
                     onChange={(e) => {

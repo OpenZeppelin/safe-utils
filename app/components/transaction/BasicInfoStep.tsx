@@ -29,9 +29,9 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
   const nestedSafeEnabled = form.watch("nestedSafeEnabled");
   const mainSafeVersion = form.watch("version");
   
-  // Set nested safe version to match main safe version when enabled
+  // Set nested safe version to match main safe version when enabled or when main version changes
   useEffect(() => {
-    if (nestedSafeEnabled && mainSafeVersion && !form.getValues("nestedSafeVersion")) {
+    if (nestedSafeEnabled && mainSafeVersion) {
       form.setValue("nestedSafeVersion", mainSafeVersion);
     }
   }, [nestedSafeEnabled, mainSafeVersion, form]);
@@ -342,11 +342,13 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                 <FormLabel>Nested Safe Version</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  value={field.value || ''}
+                  value={field.value || mainSafeVersion || ''}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select nested Safe version" />
+                      <SelectValue placeholder="Select nested Safe version">
+                        {field.value || mainSafeVersion}
+                      </SelectValue>
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>

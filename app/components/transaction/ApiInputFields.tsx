@@ -226,7 +226,7 @@ export default function ApiInputFields({ form }: ApiInputFieldsProps) {
                 onChange={(e) => field.onChange(e.target.checked)}
                 className="h-4 w-4"
               />
-              <FormLabel>Use Nested Safe</FormLabel>
+              <FormLabel className="!mt-0">Use Nested Safe</FormLabel>
             </FormItem>
           );
         }}

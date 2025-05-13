@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
+import { ZERO_ADDRESS } from "@/app/constants";
 import { 
   FormField, 
   FormItem, 
@@ -19,7 +20,6 @@ interface AdvancedParamsStepProps {
 
 export default function AdvancedParamsStep({ form }: AdvancedParamsStepProps) {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
-  const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
   
   // Watch for changes in these fields
   const gasToken = form.watch("gasToken");

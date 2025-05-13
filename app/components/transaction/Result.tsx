@@ -10,7 +10,7 @@ import HashDetails from "../result/hash-details";
 import TransactionDetails from "../result/transaction-details";
 import { useState, useEffect, useMemo } from "react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { NETWORKS } from "@/app/constants";
+import { NETWORKS, ZERO_ADDRESS } from "@/app/constants";
 import { trustedAddresses } from "../result/trusted-addresses";
 
 import {
@@ -59,8 +59,6 @@ export default function Result({ result }: any) {
   useEffect(() => {
     const newWarnings: {title: string, description: string}[] = [];
     const newInfoNotices: {title: string, description: string}[] = [];
-
-    const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
     
     if (params) {
       // Check for delegateCall operation

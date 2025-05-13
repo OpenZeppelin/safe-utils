@@ -62,7 +62,7 @@ export default function Result({ result }: any) {
     
     if (params) {
       // Check for delegateCall operation
-      if (params.operation === "1" || params.operation === 1) {
+      if (Number(params.operation) === 1) {
         const to = params.to;
         const normalizedTo = to?.toLowerCase();
         const isTrustedAddress = normalizedTo && trustedAddresses.some(

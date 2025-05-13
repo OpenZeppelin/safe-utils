@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormData } from "@/types/form-types";
-import { NETWORKS } from "@/app/constants";
+import { NETWORKS, SAFE_VERSIONS } from "@/app/constants";
 import { 
   FormField, 
   FormItem, 
@@ -253,7 +253,7 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {["0.0.1", "0.1.0", "1.0.0", "1.1.0", "1.1.1", "1.2.0", "1.3.0", "1.4.1"].map((version) => (
+                {SAFE_VERSIONS.map((version) => (
                   <SelectItem key={version} value={version}>
                     {version}
                   </SelectItem>
@@ -352,7 +352,7 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {["0.0.1", "0.1.0", "1.0.0", "1.1.0", "1.1.1", "1.2.0", "1.3.0", "1.4.1"].map((version) => (
+                    {SAFE_VERSIONS.map((version) => (
                       <SelectItem key={version} value={version}>
                         {version}
                       </SelectItem>

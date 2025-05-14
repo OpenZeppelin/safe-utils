@@ -291,7 +291,26 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
             name="nestedSafeAddress"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nested Safe Address</FormLabel>
+                <FormLabel className="flex items-center gap-1">Nested Safe Address
+                  <Tooltip open={activeTooltip === "nested-safe-address"}>
+                    <TooltipTrigger asChild>
+                      <span 
+                        className="cursor-pointer" 
+                        onClick={() => handleTooltipToggle("nested-safe-address")}
+                        onMouseEnter={() => setActiveTooltip("nested-safe-address")}
+                        onMouseLeave={() => setActiveTooltip(null)}
+                      >
+                        <HelpCircle className="ml-1 w-4 h-4 text-muted-foreground" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black"
+                      sideOffset={5}
+                    > 
+                      <p>The address of the nested Safe contract.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter nested safe address (0x...)"
@@ -321,7 +340,26 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
             name="nestedSafeNonce"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nested Safe Nonce</FormLabel>
+                <FormLabel className="flex items-center gap-1">Nested Safe Nonce
+                  <Tooltip open={activeTooltip === "nested-safe-nonce"}>
+                    <TooltipTrigger asChild>
+                      <span 
+                        className="cursor-pointer" 
+                        onClick={() => handleTooltipToggle("nested-safe-nonce")}
+                        onMouseEnter={() => setActiveTooltip("nested-safe-nonce")}
+                        onMouseLeave={() => setActiveTooltip(null)}
+                      >
+                        <HelpCircle className="ml-1 w-4 h-4 text-muted-foreground" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black"
+                      sideOffset={5}
+                    > 
+                      <p>The nonce of the nested Safe transaction you want to validate.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <FormControl>
                   <Input
                     type="number"

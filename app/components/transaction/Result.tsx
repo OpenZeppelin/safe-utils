@@ -19,6 +19,11 @@ import {
   AlertTitle,
 } from "@/components/ui/alert";
 
+const shortenAddress = (address: string) => {
+  if (!address || address.length < 10) return address;
+  return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+};
+
 export default function Result({ result }: any) {
   const [hashesExpanded, setHashesExpanded] = useState(true);
   const [transactionExpanded, setTransactionExpanded] = useState(false);
@@ -30,33 +35,26 @@ export default function Result({ result }: any) {
   const [warnings, setWarnings] = useState<{title: string, description: string}[]>([]);
   const [infoNotices, setInfoNotices] = useState<{title: string, description: string}[]>([]);
 
-  if (!result) return null;
-  else if (result.error) {
-    return <div className="max-w-3xl mx-auto">
-      <h3 className="text-lg font-medium mb-4">Error</h3>
-      <p className="text-red-500">{result.error}</p>
-    </div>
-  }
-
-  const execParams = result.transaction?.exec_transaction?.decoded?.parameters;
-
-  // Mapping the parameters by name for easy access
+  // Process all hooks before conditionals
+  const execParams = result?.transaction?.exec_transaction?.decoded?.parameters;
+  
   const params = useMemo(() => {
-    return execParams
-      ? execParams.reduce((acc: any, param: any) => {
-          acc[param.name] = param.value;
-          return acc;
-        }, {})
-      : {};
+    if (!execParams) return {};
+    return execParams.reduce((acc: any, param: any) => {
+      acc[param.name] = param.value;
+      return acc;
+    }, {});
   }, [execParams]);
   
-  const networkDetails = result.network?.name ?
+  const networkDetails = result?.network?.name ?
     NETWORKS.find((n) => n.value === result.network.name || n.label === result.network.name) :
     null;
-
+  
   const networkLogo = networkDetails?.logo || '';
-
+  
   useEffect(() => {
+    if (!params) return;
+    
     const newWarnings: {title: string, description: string}[] = [];
     const newInfoNotices: {title: string, description: string}[] = [];
     
@@ -116,10 +114,16 @@ export default function Result({ result }: any) {
     setInfoNotices(newInfoNotices);
   }, [params]);
 
-  const shortenAddress = (address: string) => {
-    if (!address || address.length < 10) return address;
-    return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
-  };
+  // Early returns after all hooks
+  if (!result) return null;
+  if (result.error) {
+    return (
+      <div className="max-w-3xl mx-auto">
+        <h3 className="text-lg font-medium mb-4">Error</h3>
+        <p className="text-red-500">{result.error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-3xl mx-auto">

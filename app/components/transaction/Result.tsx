@@ -333,6 +333,46 @@ export default function Result({ result }: any) {
       {result.nestedSafe && (
         <>
           <Separator className="my-6" />
+          <h3 className="text-lg font-medium mb-4">Nested Safe Result</h3>
+
+          {/* Nested Safe Header section */}
+          <div className="mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-end gap-2">
+              {/* Nested Safe info & badges */}
+              <div className="flex flex-wrap gap-2 items-center flex-1">
+                <Badge variant="secondary" className="text-sm px-3 py-1">Nonce: {result.nestedSafe.nestedSafeNonce}</Badge>
+                <Badge variant="secondary" className="text-sm px-3 py-1">Safe Version: {result.nestedSafe.nestedSafeVersion}</Badge>
+                <Badge variant="secondary" className="text-sm px-3 py-1 gap-1">
+                  <Avatar className="h-5 w-5">
+                    <AvatarImage
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/${networkLogo}`}
+                      alt={result.network?.name || "Network"}
+                    />
+                  </Avatar>
+                  <div className="flex items-end space-x-1">
+                    <div className="font-medium text-sm">
+                      {result.network?.name}
+                    </div>
+                    <div className="text-sm text-muted-foreground -mt-0.5">(Chain ID: {result.network?.chain_id})</div>
+                  </div>
+                </Badge>
+              </div>
+            </div>
+
+            {/* Nested Safe address */}
+            <div className="mt-4">
+              <Label htmlFor="nested-safe-address" className="text-black text-md dark:text-white">Nested Safe Address</Label>
+              <div className="relative mt-1">
+                <Input
+                  id="nested-safe-address"
+                  value={result.nestedSafe.nestedSafeAddress}
+                  readOnly
+                  className="text-md"
+                  leftIcon={<PixelAvatar address={result.nestedSafe.nestedSafeAddress} />}
+                />
+              </div>
+            </div>
+          </div>
           <Collapsible
             open={nestedSafeExpanded}
             onOpenChange={setNestedSafeExpanded}

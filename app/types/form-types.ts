@@ -58,6 +58,9 @@ export interface CalculationResult {
       domainHash: string;
       messageHash: string;
       encodedMessage: string;
+      nestedSafeAddress: string;
+      nestedSafeNonce: number;
+      nestedSafeVersion: string;
     } | null;
 }
   

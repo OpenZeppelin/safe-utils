@@ -339,7 +339,26 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
             name="nestedSafeVersion"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nested Safe Version</FormLabel>
+                <FormLabel className="flex items-center gap-1">Nested Safe Version
+                  <Tooltip open={activeTooltip === "nested-safe-version"}>
+                    <TooltipTrigger asChild>
+                      <span 
+                        className="cursor-pointer" 
+                        onClick={() => handleTooltipToggle("nested-safe-version")}
+                        onMouseEnter={() => setActiveTooltip("nested-safe-version")}
+                        onMouseLeave={() => setActiveTooltip(null)}
+                      >
+                        <HelpCircle className="ml-1 w-4 h-4 text-muted-foreground" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent 
+                      className="pointer-events-none max-w-xs break-words p-2 rounded-md bg-black text-white dark:bg-white dark:text-black"
+                      sideOffset={5}
+                    > 
+                      <p>Defaults to same version as main Safe but can be changed if needed.</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   value={field.value || mainSafeVersion || ''}
@@ -359,9 +378,6 @@ export default function BasicInfoStep({ form }: BasicInfoStepProps) {
                     ))}
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Defaults to same version as main Safe but can be changed if needed.
-                </p>
               </FormItem>
             )}
           />

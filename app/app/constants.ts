@@ -173,6 +173,13 @@ export const NETWORKS = [
       chainId: 10200,
       gnosisPrefix: "chiado",
       logo: "networks/gnosis.ico",
+    },
+    {
+      value: "hemi",
+      label: "Hemi",
+      chainId: 43111,
+      gnosisPrefix: "hemi",
+      logo: "networks/hemi.ico",
     }
   ];
 

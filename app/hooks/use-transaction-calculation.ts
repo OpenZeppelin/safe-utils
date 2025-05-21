@@ -220,7 +220,10 @@ export function useTransactionCalculation(searchParams: ReadonlyURLSearchParams)
           safeTxHash: nestedSafeResult.safeTxHash,
           domainHash: nestedSafeResult.domainHash,
           messageHash: nestedSafeResult.messageHash,
-          encodedMessage: nestedSafeResult.encodedMessage
+          encodedMessage: nestedSafeResult.encodedMessage,
+          nestedSafeAddress: data.nestedSafeAddress,
+          nestedSafeNonce: data.nestedSafeNonce,
+          nestedSafeVersion: nestedSafeVersion
         };
       }
 

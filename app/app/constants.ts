@@ -180,6 +180,13 @@ export const NETWORKS = [
       chainId: 43111,
       gnosisPrefix: "hemi",
       logo: "networks/hemi.ico",
+    },
+    {
+      value: "lens",
+      label: "Lens",
+      chainId: 232,
+      gnosisPrefix: "lens",
+      logo: "networks/lens.ico",
     }
   ];
 

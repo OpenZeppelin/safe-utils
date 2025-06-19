@@ -187,6 +187,13 @@ export const NETWORKS = [
       chainId: 232,
       gnosisPrefix: "lens",
       logo: "networks/lens.ico",
+    },
+    {
+      value: "katana",
+      label: "Katana",
+      chainId: 747474,
+      gnosisPrefix: "katana",
+      logo: "networks/katana.ico",
     }
   ];
 

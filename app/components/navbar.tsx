@@ -30,6 +30,7 @@ interface NavSection {
 interface NavMenu {
   name: string;
   sections: NavSection[];
+  bottomRow?: NavItem;
 }
 
 // Import the logo with no SSR
@@ -50,7 +51,7 @@ const Navbar: React.FC = () => {
       name: 'Products',
       sections: [
         {
-          title: 'Open Source Tools',
+          title: 'Build',
           items: [
             {
               id: 'contracts_library-navbar',
@@ -83,7 +84,14 @@ const Navbar: React.FC = () => {
                 light: 'https://www.openzeppelin.com/hubfs/upgrade-nav.svg',
                 dark: 'https://www.openzeppelin.com/hubfs/upgrades-dark.svg'
               }
-            },
+            }
+
+          ]
+        },
+        {
+          title: 'Secure',
+          href: 'https://www.openzeppelin.com/defender',
+          items: [
             {
               id: 'safe_utils-navbar',
               title: 'Safe Utils',
@@ -93,43 +101,6 @@ const Navbar: React.FC = () => {
               icon: {
                 light: 'https://www.openzeppelin.com/hubfs/safe-utils-1.svg',
                 dark: 'https://www.openzeppelin.com/hubfs/safe-utils-dark-1.svg'
-              }
-            },
-
-          ]
-        },
-        {
-          title: 'Defender Cloud Services',
-          href: 'https://www.openzeppelin.com/defender',
-          items: [
-            {
-              id: 'relayers-navbar',
-              title: 'Relayers',
-              href: 'https://www.openzeppelin.com/defender#secure-operations',
-              description: 'Send reliable transactions via API',
-              icon: {
-                light: 'https://www.openzeppelin.com/hubfs/relayers-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/relayers-dark.svg'
-              }
-            },
-            {
-              id: 'monitor-navbar',
-              title: 'Monitor',
-              href: 'https://www.openzeppelin.com/defender#secure-operations',
-              description: 'Gain visibility into your smart contracts',
-              icon: {
-                light: 'https://www.openzeppelin.com/hubfs/monitor-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/monitor-dark.svg'
-              }
-            },
-            {
-              id: 'actions-navbar',
-              title: 'Actions',
-              href: 'https://www.openzeppelin.com/defender#actions',
-              description: 'Automate smart contract operations',
-              icon: {
-                light: 'https://www.openzeppelin.com/hubfs/actions-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/actions-dark.svg'
               }
             },
             {
@@ -146,47 +117,42 @@ const Navbar: React.FC = () => {
           ]
         },
         {
-          title: '',
+          title: 'Operate',
           items: [
             {
-              id: 'code_inspector-navbar',
-              title: 'Code Inspector',
-              href: 'https://www.openzeppelin.com/defender#secure-code',
-              description: 'Find and resolve smart contract vulnerabilities',
+              id: 'relayers-navbar',
+              title: 'Relayers',
+              href: 'https://www.openzeppelin.com/open-source-stack#operate',
+              description: 'Send reliable transactions via API',
               icon: {
-                light: 'https://www.openzeppelin.com/hubfs/code-inspector-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/code-inspector-dark.svg'
+                light: 'https://www.openzeppelin.com/hubfs/relayers-nav.svg',
+                dark: 'https://www.openzeppelin.com/hubfs/relayers-dark.svg'
               }
             },
             {
-              id: 'deploy-navbar',
-              title: 'Deploy',
-              href: 'https://www.openzeppelin.com/defender#secure-deploy',
-              description: 'Launch and upgrade smart contracts safely',
+              id: 'monitor-navbar',
+              title: 'Monitor',
+              href: 'https://www.openzeppelin.com/open-source-stack#operate',
+              description: 'Gain visibility into your smart contracts',
               icon: {
-                light: 'https://www.openzeppelin.com/hubfs/deploy-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/deploy-dark.svg'
-              }
-            },
-            {
-              id: 'transaction_proposals-navbar',
-              title: 'Transaction Proposals',
-              href: 'https://www.openzeppelin.com/defender#secure-operations',
-              description: 'Interactive transaction builder',
-              icon: {
-                light: 'https://www.openzeppelin.com/hubfs/transaction-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/transaction-proposals-dark.svg'
+                light: 'https://www.openzeppelin.com/hubfs/monitor-nav.svg',
+                dark: 'https://www.openzeppelin.com/hubfs/monitor-dark.svg'
               }
             }
           ]
         }
-      ]
+      ],
+      bottomRow: {
+      id: 'source_stack-navbar',
+      href: 'https://www.openzeppelin.com/open-source-stack',
+      title: 'Explore the Open Source Stack ->'
+    }
     },
     services: {
       name: 'Services',
       sections: [
         {
-          title: 'Services',
+          title: '',
           items: [
             {
               id: 'security_audit-navbar',
@@ -199,13 +165,13 @@ const Navbar: React.FC = () => {
               }
             },
             {
-              id: 'emergency_response-navbar',
-              title: 'Emergency Response',
-              href: 'https://www.openzeppelin.com/emergency-response',
-              description: 'React with expertise and speed',
+              id: 'blockchain_infrastructure-navbar',
+              title: 'Blockchain Infrastructure Audit',
+              href: 'https://www.openzeppelin.com/blockchain-infrastructure',
+              description: 'Secure complex offchain components',
               icon: {
-                light: 'https://www.openzeppelin.com/hubfs/er-nav.svg',
-                dark: 'https://www.openzeppelin.com/hubfs/er-nav-1.svg'
+                light: 'https://7795250.fs1.hubspotusercontent-na1.net/hubfs/7795250/blockchain-infrastructure-nav.svg',
+                dark: 'https://7795250.fs1.hubspotusercontent-na1.net/hubfs/7795250/blockchain-infrastructure-dark.svg'
               }
             },
             {
@@ -219,9 +185,19 @@ const Navbar: React.FC = () => {
               }
             }
           ]
-        },
+        }
+      ],
+      bottomRow: {
+      id: 'stats-navbar',
+      href: 'https://www.openzeppelin.com/stats',
+      title: 'Take a look at out Audits Stats ->'
+    }
+    },
+    solutions: {
+      name: 'Solutions',
+      sections: [
         {
-          title: 'Solutions',
+          title: '',
           items: [
             {
               id: 'ecosystem_stack-navbar',
@@ -231,6 +207,16 @@ const Navbar: React.FC = () => {
               icon: {
                 light: 'https://www.openzeppelin.com/hubfs/es-nav.svg',
                 dark: 'https://www.openzeppelin.com/hubfs/es-nav-1.svg'
+              }
+            },
+            {
+              id: 'fintantial_markets-navbar',
+              title: 'Financial Institutions Stack',
+              href: 'https://www.openzeppelin.com/financial-institutions',
+              description: 'Bring traditional finance onchain',
+              icon: {
+                light: 'https://7795250.fs1.hubspotusercontent-na1.net/hubfs/7795250/fm-nav-light.svg',
+                dark: 'https://7795250.fs1.hubspotusercontent-na1.net/hubfs/7795250/fm-nav-dark.svg'
               }
             }
           ]
@@ -353,49 +339,63 @@ const Navbar: React.FC = () => {
                           {menu.name}
                         </a>
 
-                        <div className={`invisible opacity-0 absolute top-[40px] ${key === 'products' ? 'left-[-224px] min-w-0 max-w-[1200px] w-[calc(100vw-55px)]' :
-                          key === 'services' ? 'left-[-337px] min-w-0 max-w-[790px] w-[calc(100vw-55px)]' :
-                            'transform -translate-x-1/2 left-1/2 min-w-[500px]'
-                          } bg-white dark:bg-[#0D0D0D] border border-[#e8e8e8] dark:border-[#292929] shadow-[0px_10px_20px_rgba(0,0,0,0.05)] rounded-[16px] p-8 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-hover:mt-0`}>
+                        <div className={`invisible opacity-0 absolute top-[40px] ${
+                          key === 'products'
+                            ? 'left-[-224px] min-w-0 max-w-[1200px] w-[calc(100vw-55px)]'
+                            : key === 'resources'
+                              ? 'transform -translate-x-1/2 left-1/2 min-w-[500px]'
+                              : 'transform -translate-x-1/2 left-1/2 min-w-0 w-max'
+                        } bg-white dark:bg-[#0D0D0D] border border-[#e8e8e8] dark:border-[#292929] shadow-[0px_10px_20px_rgba(0,0,0,0.05)] rounded-[16px] pt-[22px] pb-[22px] px-8 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-hover:mt-0`}>
+
+
                           <div className={`before:content-[''] before:block before:w-6 before:h-[15px] before:absolute before:top-0 ${key === 'products' ? 'before:left-[245px]' :
-                            key === 'services' ? 'before:left-[354px]' :
                               'before:left-1/2 before:-translate-x-1/2'
                             } before:-translate-y-full before:bg-[url('https://7795250.fs1.hubspotusercontent-na1.net/hubfs/7795250/triangle-corner2.svg')] dark:before:bg-[url('https://7795250.fs1.hubspotusercontent-na1.net/hubfs/7795250/triangle-corner-darkest.svg')] before:bg-cover before:bg-no-repeat`}>
                             {/* Add a hidden pseudo-element to create a hover bridge */}
                             <div className="absolute -top-5 left-0 w-full h-5 bg-transparent opacity-0 group-hover:opacity-100"></div>
                             {/* <div className="absolute h-[15px] w-full top-[100%] left-0 bg-transparent"></div> */}
-                            <div className="flex justify-between gap-[30px] flex-wrap">
+                            <div className={`flex justify-between flex-wrap gap-x-[30px] gap-y-[10px] ${
+                                            key === 'services' ? 'flex-col' : ''
+                                          }`}>
                               {menu.sections.map((section, idx) => (
                                 <div key={idx} className="flex flex-col gap-1 flex-1">
-                                  {section.href ? (
-                                    <a href={section.href} className="text-[rgba(108,111,136,0.8)] dark:text-[#b7b7b7] text-[15px] font-medium leading-[126%] mb-[10px] min-h-5 px-2 transition-all duration-400 hover:text-[#0a0f39] dark:hover:text-white">
-                                      {section.title}
-                                    </a>
-                                  ) : (
-                                    <div className="text-[rgba(108,111,136,0.8)] dark:text-[#b7b7b7] text-[15px] font-medium leading-[126%] mb-[10px] min-h-5 px-2 transition-all duration-400">
-                                      {section.title}
-                                    </div>
+                                 {section.title && (
+                                    section.href ? (
+                                      <a
+                                        href={section.href}
+                                        className="text-[rgba(108,111,136,0.8)] dark:text-[#b7b7b7] text-[15px] font-medium leading-[126%] mt-[10px] mb-[10px] min-h-5 transition-all duration-400 hover:text-[#0a0f39] dark:hover:text-white"
+                                      >
+                                        {section.title}
+                                      </a>
+                                    ) : (
+                                      <div
+                                        className="text-[rgba(108,111,136,0.8)] dark:text-[#b7b7b7] text-[15px] font-medium leading-[126%] mt-[10px] mb-[10px] min-h-5 transition-all duration-400"
+                                      >
+                                        {section.title}
+                                      </div>
+                                    )
                                   )}
 
                                   {section.items.map((item) => (
-                                    <a
-                                      key={item.id}
-                                      id={item.id}
-                                      href={item.href}
-                                      target={item.target}
-                                      className="flex items-center gap-4 text-inherit p-[10px] rounded-[10px] transition-all duration-400 hover:bg-[#fafafa] dark:hover:bg-[#1e1e1e] hover:text-[#0a0f39] dark:hover:text-[#fafafa]"
-                                    >
+                                   <a
+                                        key={item.id}
+                                        id={item.id}
+                                        href={item.href}
+                                        target={item.target}
+                                        className="flex items-center gap-4 text-inherit p-[10px] rounded-[10px] transition-all duration-400 hover:bg-[#fafafa] dark:hover:bg-[#1e1e1e] hover:text-[#0a0f39] dark:hover:text-[#fafafa] min-h-[60px] grayscale transition-all duration-300 hover:grayscale-0 ml-[-10px]"
+                                      >
+
                                       {item.icon && (
                                         <>
                                           <Image
-                                            className="w-10 grayscale transition-all duration-300 hover:grayscale-0 dark:hidden"
+                                            className="w-10 dark:hidden"
                                             src={item.icon.light}
                                             alt=""
                                             width={40}
                                             height={40}
                                           />
                                           <Image
-                                            className="w-10 grayscale transition-all duration-300 hover:grayscale-0 hidden dark:block"
+                                            className="w-10 hidden dark:block"
                                             src={item.icon.dark}
                                             alt=""
                                             width={40}
@@ -419,21 +419,34 @@ const Navbar: React.FC = () => {
                               ))}
 
                               {/* Bottom row for pricing (only in products menu) */}
-                              {key === 'products' && (
-                                <div className="grid grid-cols-3 gap-[35px] w-full">
-                                  <div className="col-span-1"></div>
-                                  <div className="col-span-2 pt-5 border-t border-[rgba(229,229,229,0.8)] dark:border-[#292929]">
-                                    <a id="pricing-navbar" href="https://www.openzeppelin.com/pricing" className="inline-block p-0 mb-0 transition-all duration-200 hover:text-[#4f56fa] dark:text-[#fafafa] dark:hover:text-[#4F56FA]">
-                                      <span className="text-[15px] font-medium">Defender Pricing -&gt;</span>
-                                    </a>
+                              {(key === 'products' || key === 'services') && navMenus[key]?.bottomRow && (
+                                  <div className="w-full">
+                                    <div className="col-span-2 pt-5 border-t border-[rgba(229,229,229,0.8)] dark:border-[#292929]">
+                                      <a
+                                        id={navMenus[key].bottomRow.id}
+                                        href={navMenus[key].bottomRow.href}
+                                        className="inline-block p-0 mb-0 transition-all duration-200 hover:text-[#4f56fa] dark:text-[#fafafa] dark:hover:text-[#4F56FA]"
+                                      >
+                                        <span className="text-[15px] font-medium">{navMenus[key].bottomRow.title}</span>
+                                      </a>
+                                    </div>
                                   </div>
-                                </div>
-                              )}
+                                )}
+
                             </div>
                           </div>
                         </div>
                       </li>
+                      
                     ))}
+                    <li className="relative group">
+                        <a
+                          href="https://www.openzeppelin.com/stats"
+                          className="text-[15px] font-medium leading-[126%] tracking-[-0.01em] text-[#0a0f39] dark:text-[#fafafa] hover:text-[#4e5ee4] dark:hover:text-[#d1d1d1] transition-colors duration-300"
+                        >
+                          Stats
+                        </a>
+                      </li>
                   </ul>
                 </div>
 
@@ -679,6 +692,14 @@ const Navbar: React.FC = () => {
                         ))}
                       </div>
                     </ul>
+                  </li>
+                  <li className={`p-main-nav-item px-4 py-4 relative`}>
+                    <a
+                      href="https://www.openzeppelin.com/stats"
+                      className="block text-[16px] font-medium text-[#0a0f39] dark:text-[#fafafa]"
+                    >
+                      Stats
+                    </a>
                   </li>
                 </ul>
               </nav>

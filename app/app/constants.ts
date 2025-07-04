@@ -187,6 +187,13 @@ export const NETWORKS = [
       chainId: 232,
       gnosisPrefix: "lens",
       logo: "networks/lens.ico",
+    },
+    {
+      value: "rootstock",
+      label: "Rootstock",
+      chainId: 30,
+      gnosisPrefix: "rsk",
+      logo: "networks/rootstock.ico",
     }
   ];
 

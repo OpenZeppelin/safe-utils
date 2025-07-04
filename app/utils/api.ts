@@ -3,8 +3,13 @@ import { TransactionParams } from "@/types/form-types";
 
 // Function to get Safe version
 export async function fetchSafeVersion(network: string, address: string): Promise<string> {
-  const apiUrl = `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
-  const endpoint = `${apiUrl}/api/v1/safes/${address}/`;
+  const apiUrl = network === 'rootstock' 
+    ? 'https://gateway.safe.rootstock.io'
+    : `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
+  
+  const endpoint = network === 'rootstock' 
+    ? `${apiUrl}/v1/chains/30/safes/${address}`
+    : `${apiUrl}/api/v1/safes/${address}/`;
 
   try {
     const response = await fetch(endpoint);
@@ -32,8 +37,12 @@ export async function fetchTransactionDataFromApi(
     throw new Error(`Network ${network} not found`);
   }
   
-  const apiUrl = `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
-  const endpoint = `${apiUrl}/api/v1/safes/${address}/multisig-transactions/?nonce=${nonce}`;
+  const apiUrl = network === 'rootstock' 
+    ? 'https://gateway.safe.rootstock.io'
+    : `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
+  const endpoint = network === 'rootstock' 
+    ? `${apiUrl}/v1/chains/30/safes/${address}/multisig-transactions/?nonce=${nonce}`
+    : `${apiUrl}/api/v1/safes/${address}/multisig-transactions/?nonce=${nonce}`;
   
   try {
     const response = await fetch(endpoint);
@@ -43,7 +52,8 @@ export async function fetchTransactionDataFromApi(
     }
     
     const data = await response.json();
-    const count = data.count || 0;
+
+    const count = network === 'rootstock' ? data.results.length : data.count || 0;
     
     if (count === 0) {
       throw new Error("No transaction available for this nonce!");
@@ -55,6 +65,52 @@ export async function fetchTransactionDataFromApi(
     const version = await fetchSafeVersion(network, address);
     
     const idx = 0;
+    
+    // Handle Rootstock separately as it requires an additional call to retrieve detailed execution info
+    if (network === 'rootstock') {
+      // Rootstock response nests the transaction id inside the first call, we need it for the detailed endpoint
+      const txId = data.results[idx]?.transaction?.id;
+      if (!txId) {
+        throw new Error("Transaction id not found in Rootstock response");
+      }
+
+      // Fetch the detailed transaction information
+      const detailEndpoint = `${apiUrl}/v1/chains/${selectedNetwork.chainId}/transactions/${txId}`;
+      const detailResponse = await fetch(detailEndpoint);
+      if (!detailResponse.ok) {
+        throw new Error(`Detail API request failed: ${detailResponse.statusText}`);
+      }
+      const detail = await detailResponse.json();
+
+      // Extract fields from Rootstock detailed response
+      const txData = detail.txData || {};
+      const execInfo = detail.detailedExecutionInfo || {};
+
+      // Build concatenated signatures string (matching Gnosis behaviour: first sig keeps 0x prefix, subsequent ones drop it)
+      const signaturesArr: string[] = (execInfo.confirmations || []).map((c: any) => c.signature).filter(Boolean);
+      const signatures = signaturesArr.reduce((acc: string, sig: string, idx: number) => {
+        if (!sig) return acc;
+        return acc + (idx === 0 ? sig : sig.replace(/^0x/, ""));
+      }, "");
+
+      return {
+        to: txData.to?.value || "0x0000000000000000000000000000000000000000",
+        value: txData.value || "0",
+        data: txData.hexData || "0x",
+        operation: (txData.operation ?? "0").toString(),
+        safeTxGas: execInfo.safeTxGas?.toString() || "0",
+        baseGas: execInfo.baseGas?.toString() || "0",
+        gasPrice: execInfo.gasPrice?.toString() || "0",
+        gasToken: execInfo.gasToken || "0x0000000000000000000000000000000000000000",
+        refundReceiver: execInfo.refundReceiver?.value || "0x0000000000000000000000000000000000000000",
+        nonce: execInfo.nonce?.toString() || "0",
+        dataDecoded: txData.dataDecoded || null,
+        version: version,
+        signatures: signatures ? signatures : undefined
+      } as TransactionParams;
+    }
+
+    // Default behaviour for all other networks
     return {
       to: data.results[idx].to || "0x0000000000000000000000000000000000000000",
       value: data.results[idx].value || "0",

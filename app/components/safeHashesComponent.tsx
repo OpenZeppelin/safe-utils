@@ -35,6 +35,8 @@ function encodeAbi(types: string[], values: any[]): string {
 function calculateDomainHash(version: string, safeAddress: string, chainId: string): string {
   const cleanVersion = version.trim();
   let encodedData: string;
+
+  if (chainId === "30") safeAddress = safeAddress.toLowerCase();
   
   // Safe multisig versions `<= 1.2.0` use a legacy format
   if (compareVersions(cleanVersion, "1.2.0") <= 0) {
@@ -85,6 +87,14 @@ export async function calculateHashes(
   safeTxHash: string,
   encodedMessage: string
 }> {
+  // For Rootstock (chainId 30) we must pass addresses in lowercase to satisfy ethers checksum rules.
+  if (chainId === "30") {
+    address = address.toLowerCase();
+    to = to.toLowerCase();
+    gasToken = gasToken.toLowerCase();
+    refundReceiver = refundReceiver.toLowerCase();
+  }
+
   const cleanVersion = version.trim();
   let safeTxTypehash = SAFE_TX_TYPEHASH;
 

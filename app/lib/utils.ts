@@ -17,6 +17,7 @@ export const API_URLS: { [key: string]: string } = {
   celo: "https://safe-transaction-celo.safe.global",
   ethereum: "https://safe-transaction-mainnet.safe.global",
   gnosis: "https://safe-transaction-gnosis-chain.safe.global",
+  katana: "https://safe-transaction-katana.safe.global",
   "gnosis-chiado": "https://safe-transaction-chiado.safe.global",
   linea: "https://safe-transaction-linea.safe.global",
   mantle: "https://safe-transaction-mantle.safe.global",

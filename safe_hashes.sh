@@ -173,6 +173,7 @@ declare -A -r API_URLS=(
 	["worldchain"]="https://safe-transaction-worldchain.safe.global"
 	["xlayer"]="https://safe-transaction-xlayer.safe.global"
 	["zksync"]="https://safe-transaction-zksync.safe.global"
+	["katana"]="https://safe-transaction-katana.safe.global"
 )
 
 # Define the chain IDs of the supported networks from the Safe transaction service.
@@ -200,6 +201,7 @@ declare -A -r CHAIN_IDS=(
 	["worldchain"]="480"
 	["xlayer"]="196"
 	["zksync"]="324"
+	["katana"]="747474"
 )
 
 # Utility function to display the usage information.

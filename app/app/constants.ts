@@ -98,7 +98,7 @@ export const NETWORKS = [
       logo: "networks/celo.ico",
     },
     {
-      value: "gnosis",
+      value: "gnosis-chain",
       label: "Gnosis Chain",
       chainId: 100,
       gnosisPrefix: "gno",
@@ -168,7 +168,7 @@ export const NETWORKS = [
       logo: "networks/base.ico",
     },
     {
-      value: "gnosis-chiado",
+      value: "chiado",
       label: "Gnosis Chiado",
       chainId: 10200,
       gnosisPrefix: "chiado",
@@ -194,7 +194,42 @@ export const NETWORKS = [
       chainId: 747474,
       gnosisPrefix: "katana",
       logo: "networks/katana.ico",
-    }
+    },
+    {
+      value: "botanix",
+      label: "Botanix",
+      chainId: 3637,
+      gnosisPrefix: "botanix",
+      logo: "networks/botanix.ico",
+    },
+    {
+      value: "codex",
+      label: "Codex",
+      chainId: 81224,
+      gnosisPrefix: "codex",
+      logo: "networks/codex.ico",
+    },
+    {
+      value: "opbnb",
+      label: "opBNB",
+      chainId: 204,
+      gnosisPrefix: "opbnb",
+      logo: "networks/opbnb.ico",
+    },
+    {
+      value: "peaq",
+      label: "Peaq",
+      chainId: 3338,
+      gnosisPrefix: "peaq",
+      logo: "networks/peaq.ico",
+    },
+    {
+      value: "xdc",
+      label: "XDC",
+      chainId: 50,
+      gnosisPrefix: "xdc",
+      logo: "networks/xdc.ico",
+    },
   ];
 
 

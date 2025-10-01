@@ -2,8 +2,7 @@ import { NETWORKS } from "@/app/constants";
 import { TransactionParams } from "@/types/form-types";
 
 // Function to get Safe version
-export async function fetchSafeVersion(network: string, address: string): Promise<string> {
-  const apiUrl = `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
+export async function fetchSafeVersion(apiUrl: string, network: string, address: string): Promise<string> {
   const endpoint = `${apiUrl}/api/v1/safes/${address}/`;
 
   try {
@@ -32,9 +31,12 @@ export async function fetchTransactionDataFromApi(
     throw new Error(`Network ${network} not found`);
   }
   
-  const apiUrl = `https://safe-transaction-${network === 'ethereum' ? 'mainnet' : network}.safe.global`;
-  const endpoint = `${apiUrl}/api/v1/safes/${address}/multisig-transactions/?nonce=${nonce}`;
-  
+  const apiUrl = selectedNetwork.apiUrl;
+  if (!apiUrl) {
+    throw new Error(`API URL not found for network ${network}`);
+  }
+
+  const endpoint = `${apiUrl}/api/v2/safes/${address}/multisig-transactions/?nonce=${nonce}`;
   try {
     const response = await fetch(endpoint);
     
@@ -50,9 +52,9 @@ export async function fetchTransactionDataFromApi(
     } else if (count > 1) {
       throw new Error("Multiple transactions with the same nonce value were detected.");
     }
-
-    // Get version first
-    const version = await fetchSafeVersion(network, address);
+    // Wait a second for a new request to the API
+    await new Promise(resolve => setTimeout(resolve, 1100));
+    const version = await fetchSafeVersion(apiUrl, network, address);
     
     const idx = 0;
     return {

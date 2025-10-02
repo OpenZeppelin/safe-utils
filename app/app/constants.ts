@@ -63,6 +63,7 @@ export const NETWORKS = [
       chainId: 3637,
       gnosisPrefix: "botanix",
       logo: "networks/botanix.ico",
+      apiUrl: `${BASE_URL}/btc`,
     },
     {
       value: "bsc",
@@ -166,6 +167,7 @@ export const NETWORKS = [
       chainId: 204,
       gnosisPrefix: "opbnb",
       logo: "networks/opbnb.ico",
+      apiUrl: `${BASE_URL}/opbnb`,
     },
     {
       value: "optimism",

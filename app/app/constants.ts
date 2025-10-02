@@ -236,7 +236,7 @@ export const NETWORKS = [
     {
       value: "worldchain",
       label: "Worldchain",
-      chainId: 10252,
+      chainId: 480,
       gnosisPrefix: "wc",
       logo: "networks/worldchain.ico",
       apiUrl: `${BASE_URL}/wc`,
@@ -252,7 +252,7 @@ export const NETWORKS = [
     {
       value: "xlayer",
       label: "xLayer",
-      chainId: 204,
+      chainId: 196,
       gnosisPrefix: "xlayer",
       logo: "networks/xlayer.ico",
       apiUrl: `${BASE_URL}/okb`,

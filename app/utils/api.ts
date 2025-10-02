@@ -1,12 +1,17 @@
 import { NETWORKS } from "@/app/constants";
 import { TransactionParams } from "@/types/form-types";
 
+function getSafeApiKey(): string | undefined {
+  return process.env.SAFE_API_KEY;
+}
+
 // Function to get Safe version
 export async function fetchSafeVersion(apiUrl: string, network: string, address: string): Promise<string> {
   const endpoint = `${apiUrl}/api/v1/safes/${address}/`;
 
   try {
-    const response = await fetch(endpoint);
+    const apiKey = getSafeApiKey();
+    const response = await fetch(endpoint, apiKey ? { headers: { Authorization: `Bearer ${apiKey}` } } : undefined);
     if (!response.ok) {
       throw new Error(`Safe contract not found at address ${address} on network ${network}`);
     }
@@ -38,7 +43,8 @@ export async function fetchTransactionDataFromApi(
 
   const endpoint = `${apiUrl}/api/v2/safes/${address}/multisig-transactions/?nonce=${nonce}`;
   try {
-    const response = await fetch(endpoint);
+    const apiKey = getSafeApiKey();
+    const response = await fetch(endpoint, apiKey ? { headers: { Authorization: `Bearer ${apiKey}` } } : undefined);
     
     if (!response.ok) {
       throw new Error(`API request failed: ${response.statusText}`);
@@ -52,8 +58,10 @@ export async function fetchTransactionDataFromApi(
     } else if (count > 1) {
       throw new Error("Multiple transactions with the same nonce value were detected.");
     }
-    // Wait a second for a new request to the API
-    await new Promise(resolve => setTimeout(resolve, 1100));
+    // Wait if no API key provided (avoid rate limits)
+    if (!apiKey) {
+      await new Promise(resolve => setTimeout(resolve, 1100));
+    }
     const version = await fetchSafeVersion(apiUrl, network, address);
     
     const idx = 0;

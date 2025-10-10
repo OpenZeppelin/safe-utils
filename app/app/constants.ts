@@ -2,6 +2,14 @@ export const BASE_URL = "https://api.safe.global/tx-service";
 
 export const NETWORKS = [
     {
+      value: "0g",
+      label: "0g",
+      chainId: 16661,
+      gnosisPrefix: "0g",
+      logo: "networks/0g.ico",
+      apiUrl: `${BASE_URL}/0g`,
+    },
+    {
       value: "arbitrum",
       label: "Arbitrum",
       chainId: 42161,
@@ -162,6 +170,14 @@ export const NETWORKS = [
       apiUrl: `${BASE_URL}/mantle`,
     },
     {
+      value: "monad",
+      label: "Monad",
+      chainId: 143,
+      gnosisPrefix: "monad",
+      logo: "networks/monad.ico",
+      apiUrl: `${BASE_URL}/monad`,
+    },
+    {
       value: "opbnb",
       label: "opBNB",
       chainId: 204,
@@ -184,6 +200,14 @@ export const NETWORKS = [
       gnosisPrefix: "peaq",
       logo: "networks/peaq.ico",
       apiUrl: `${BASE_URL}/peaq`,
+    },
+    {
+      value: "plasma",
+      label: "Plasma",
+      chainId: 9745,
+      gnosisPrefix: "plasma",
+      logo: "networks/plasma.ico",
+      apiUrl: `${BASE_URL}/plasma`,
     },
     {
       value: "polygon",

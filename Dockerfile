@@ -20,22 +20,6 @@ FROM node:20-slim AS runner
 
 WORKDIR /app
 
-# Install system dependencies and Foundry (for cast and chisel)
-RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    jq \
-    && curl -L https://foundry.paradigm.xyz | bash \
-    && ~/.foundry/bin/foundryup \
-    && ln -s ~/.foundry/bin/cast /usr/local/bin/cast \
-    && ln -s ~/.foundry/bin/chisel /usr/local/bin/chisel \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy the shell script and make it executable
-COPY safe_hashes.sh ../
-RUN chmod +x ../safe_hashes.sh
-
 # Copy built app from builder stage
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public

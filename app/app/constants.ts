@@ -274,6 +274,14 @@ export const NETWORKS = [
     apiUrl: `${BASE_URL}/sonic`,
   },
   {
+    value: "stable",
+    label: "Stable",
+    chainId: 988,
+    gnosisPrefix: "stable",
+    logo: "networks/stable.ico",
+    apiUrl: `${BASE_URL}/stable`,
+  },
+  {
     value: "xdc",
     label: "XDC",
     chainId: 50,

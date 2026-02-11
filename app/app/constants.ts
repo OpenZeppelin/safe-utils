@@ -226,6 +226,14 @@ export const NETWORKS = [
     apiUrl: `${BASE_URL}/mantle`,
   },
   {
+    value: "megaeth",
+    label: "MegaETH",
+    chainId: 4326,
+    gnosisPrefix: "mega",
+    logo: "networks/megaeth.ico",
+    apiUrl: `${BASE_URL}/mega`,
+  },
+  {
     value: "opbnb",
     label: "opBNB",
     chainId: 204,

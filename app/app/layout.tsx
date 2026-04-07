@@ -6,6 +6,7 @@ import { Footer } from '@/components/footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Navbar from '@/components/navbar'
+import { DisclaimerBanner } from '@/components/disclaimer-banner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -50,6 +51,7 @@ export default function RootLayout({
             <div className="min-h-screen flex flex-col bg-gradient-main dark:bg-gradient-main-dark">
               <div className="flex flex-col flex-grow">
                 <Navbar />
+                <DisclaimerBanner />
                 <main className="flex-grow flex flex-col items-center justify-start pt-5 mt-5">
                   {children}
                 </main>

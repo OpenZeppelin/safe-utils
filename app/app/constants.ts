@@ -274,6 +274,22 @@ export const NETWORKS = [
     apiUrl: `${BASE_URL}/sonic`,
   },
   {
+    value: "tempo",
+    label: "Tempo",
+    chainId: 4217,
+    gnosisPrefix: "tempo",
+    logo: "networks/tempo.svg",
+    apiUrl: `${BASE_URL}/tempo`,
+  },
+  {
+    value: "tempo-moderato",
+    label: "Tempo Moderato",
+    chainId: 42431,
+    gnosisPrefix: "tempo-moderato",
+    logo: "networks/tempo.svg",
+    apiUrl: `${BASE_URL}/tempo-moderato`,
+  },
+  {
     value: "xdc",
     label: "XDC",
     chainId: 50,

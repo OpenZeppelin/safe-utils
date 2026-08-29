@@ -13,6 +13,9 @@ on:
         default: 'minor'
         required: false
 
+permissions:
+  contents: write
+
 jobs:
   check-permission:
     runs-on: ubuntu-latest
